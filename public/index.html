@@ -1,81 +1,152 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>AquaTech | Página Inicial</title>
-
-    <script src="./js/sessao.js"></script>
-
-    <link rel="stylesheet" href="./css/estilo.css">
-    <link rel="icon" href="./assets/icon/favicon2.ico">
-    <link rel="preconnect" href="https://fonts.gstatic.com">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Universo J&M</title>
+  <link rel="stylesheet" href="./css/estilo.css">
 </head>
 
 <body>
-    <div class="header">
-      <div class="container">
-        <h1 class="titulo">AquaTech</h1>
-        <ul class="navbar">
-          <li class="agora">
-            <a href="#">Inicial</a>
-          </li>
-          <li>
-            <a href="simulador.html">Simulador</a>
-          </li>
-          <li>|</li>
-          <li>
-            <a href="login.html">Login</a>
-          </li>
-          <li>
-            <a href="cadastro.html">Cadastro</a>
-          </li>
-        </ul>
-      </div>
-    </div>
-  
-    <div class="banner">
-      <div class="container">
-        <p>Preservando <span>hoje</span> para existirem <span>amanhã</span>.</p>
-      </div>
-    </div>
-  
-    <div class="social">
-      <div class="container">
-        <div class="boxes">
-          <div class="box">
-            <img src="assets/imgs/planet-earth_color.png">
-            <h4>Missão</h4>
-            <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Et, quas cupiditate asperiores provident magnam
-              vitae illum iusto fugiat atque deleniti nulla sed iure suscipit, laborum, aliquid accusantium cum dicta
-              minima.</p>
-          </div>
-          <div class="box">
-            <img src="assets/imgs/lightbulb_color.png">
-            <h4>Visão</h4>
-            <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Et, quas cupiditate asperiores provident magnam
-              vitae illum iusto fugiat atque deleniti nulla sed iure suscipit, laborum, aliquid accusantium cum dicta
-              minima.</p>
-          </div>
-          <div class="box">
-            <img src="assets/imgs/growth_color.png">
-            <h4>Valores</h4>
-            <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Et, quas cupiditate asperiores provident magnam
-              vitae illum iusto fugiat atque deleniti nulla sed iure suscipit, laborum, aliquid accusantium cum dicta
-              minima.</p>
-          </div>
+
+  <header class="topo">
+    <a href="#home" class="logo">Universo J&M</a>
+    <nav class="menu">
+      <a href="#home">Home</a>
+      <a href="#historia">História</a>
+      <a href="#discografia">Discografia</a>
+      <a href="quiz.html">Quiz</a>
+      <a href="resultados.html">Resultados</a>
+      <a href="login.html" id="link-conta">Entrar</a>
+      <button type="button" id="btn-sair" class="btn-sair escondido" onclick="sair()">Sair</button>
+    </nav>
+  </header>
+
+  <main>
+
+    <!-- home -->
+    <section id="home" class="hero">
+      <img src="./assets/imgs/JM4.webp" alt="Jorge e Mateus no palco" class="hero-imagem">
+
+      <div class="hero-texto">
+        <span class="chamada-topo">Jorge & Mateus</span>
+        <h1>Uma história que virou música.</h1>
+        <p>Conheça a trajetória de Jorge & Mateus, relembre os maiores sucessos e teste o que você sabe sobre a dupla.
+        </p>
+        <div class="botoes">
+          <a href="#historia" class="btn btn-dourado">Conhecer a dupla</a>
+          <a href="quiz.html" class="btn btn-borda">Fazer o quiz</a>
         </div>
       </div>
-    </div>
-  
-    <div class="footer">
-      <div class="container">
-        <h4>Feito com amor por aluno &hearts; SPTech &copy; 2023-2026</h4>
+    </section>
+
+    <!-- história -->
+    <section id="historia" class="pagina secao-escura">
+      <div class="conteudo">
+        <h2>A história da dupla</h2>
+
+        <div class="linha-tempo">
+
+          <div class="momento">
+            <div class="ano">20XX</div>
+            <div class="foto">Foto</div>
+            <p>Jorge e Mateus cresceram em Goiás, em meio à música sertaneja.</p>
+          </div>
+
+          <div class="momento">
+            <div class="ano">20XX</div>
+            <div class="foto">Foto</div>
+            <p>A dupla nasceu nos anos 2000.</p>
+          </div>
+
+          <div class="momento">
+            <div class="ano">20XX</div>
+            <div class="foto">Foto</div>
+            <p>Os primeiros grandes sucessos chegaram ao rádio e às plataformas.</p>
+          </div>
+
+          <div class="momento">
+            <div class="ano">Hoje</div>
+            <div class="foto">Foto</div>
+            <p>Hoje, Jorge & Mateus fazem turnês com grandes públicos pelo Brasil.</p>
+          </div>
+
+        </div>
       </div>
-    </div>
-  </body>
+    </section>
+
+    <!-- discografia -->
+    <section id="discografia" class="pagina">
+      <h2>Discografia</h2>
+
+      <div class="grade">
+
+        <article class="musica">
+          <div class="capa">
+            <img src="assets/imgs/albuns/album1.jpg" alt="Ao Vivo em Goiânia">
+          </div>
+          <h3>Ao Vivo em Goiânia</h3>
+          <p class="detalhe">2007</p>
+        </article>
+
+        <article class="musica">
+          <div class="capa">
+            <img src="assets/imgs/albuns/album2.jpg" alt="O Mundo É Tão Pequeno">
+          </div>
+          <h3>O Mundo É Tão Pequeno</h3>
+          <p class="detalhe">2009</p>
+        </article>
+
+        <article class="musica">
+          <div class="capa">
+            <img src="assets/imgs/albuns/album3.jpg" alt="Aí Já Era">
+          </div>
+          <h3>Aí Já Era</h3>
+          <p class="detalhe">2010</p>
+        </article>
+
+        <article class="musica">
+          <div class="capa">
+            <img src="assets/imgs/albuns/album4.jpg" alt="A Hora É Agora">
+          </div>
+          <h3>A Hora É Agora</h3>
+          <p class="detalhe">2012</p>
+        </article>
+
+        <article class="musica">
+          <div class="capa">
+            <img src="assets/imgs/albuns/album5.jpg" alt="Live in London">
+          </div>
+          <h3>Live in London</h3>
+          <p class="detalhe">2013</p>
+        </article>
+
+        <article class="musica">
+          <div class="capa">
+            <img src="assets/imgs/albuns/album6.jpg" alt="10 Anos">
+          </div>
+          <h3>10 Anos</h3>
+          <p class="detalhe">2016</p>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- chamando quiz -->
+    <section class="pagina">
+      <div class="chamada-quiz">
+        <h2>Quanto você sabe sobre a dupla?</h2>
+        <p>Responda as perguntas, veja sua pontuação e descubra se você é fã de verdade.</p>
+        <a href="quiz.html" class="btn btn-dourado">Testar meus conhecimentos</a>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="rodape">
+    <p>J&M - Uma História que Virou Música. Projeto feito por João Pedro Sakamoto Murata Hashimoto.</p>
+  </footer>
+</body>
 
 </html>
