@@ -1,158 +1,136 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Entrar | Universo J&M</title>
 
-    <title>AquaTech | Login</title>
-
-    <script src="./js/sessao.js"></script>
-
-    <link rel="stylesheet" href="./css/estilo.css">
-    <link rel="icon" href="./assets/icon/favicon2.ico">
-    <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link rel="stylesheet" href="./css/estilo.css">
 </head>
 
 <body>
 
-    <!--Header-->
+  <header class="topo">
+    <a href="index.html#home" class="logo">Universo J&M</a>
+    <nav class="menu">
+      <a href="index.html#home">Home</a>
+      <a href="index.html#historia">História</a>
+      <a href="index.html#discografia">Discografia</a>
+      <a href="quiz.html">Quiz</a>
+      <a href="resultados.html">Resultados</a>
+      <a href="login.html" id="link-conta">Entrar</a>
+      <button type="button" id="btn-sair" class="btn-sair escondido" onclick="sair()">Sair</button>
+    </nav>
+  </header>
 
-    <div class="header">
-        <div class="container">
-            <h1 class="titulo">AquaTech</h1>
-            <ul class="navbar">
-                <li>
-                    <a href="index.html">Inicial</a>
-                </li>
-                <li>
-                    <a href="simulador.html">Simulador</a>
-                </li>
-                <li>|</li>
-                <li class="agora">
-                    <a href="#">Login</a>
-                </li>
-                <li>
-                    <a href="cadastro.html">Cadastro</a>
-                </li>
-            </ul>
+  <main class="auth">
+    <section class="auth-card">
+
+      <div class="auth-lateral">
+        <img src="./assets/imgs/JM4.webp" alt="Jorge e Mateus">
+        <div class="auth-lateral-texto">
+          <span class="chamada-topo">Jorge &amp; Mateus</span>
+          <p class="auth-frase">Entre para jogar o quiz e guardar a sua pontuação.</p>
         </div>
-    </div>
+      </div>
 
+      <div class="auth-form">
+        <h1>Que bom te ver de novo</h1>
+        <p class="auth-sub">Entre com o seu e-mail e a sua senha.</p>
 
-    <div class="login">
-        <div class="alerta_erro">
-            <div class="card_erro" id="cardErro">
-                <span id="mensagem_erro"></span>
-            </div>
+        <div class="campo">
+          <label for="ipt_email">E-mail</label>
+          <input id="ipt_email" type="email" placeholder="meuemail@provedor.com">
         </div>
-        <div class="container">
-            <div class="card card-login">
-                <h2>Olá de volta!</h2>
-                <div class="formulario">
-                    <div class="campo">
-                        <span>E-mail:</span>
-                        <input id="email_input" type="text" placeholder="Login">
-                    </div>
-                    <div class="campo">
-                        <span>Senha:</span>
-                        <input id="senha_input" type="password" placeholder="******">
-                    </div>
-                    <button class="botao" onclick="entrar()">Entrar</button>
-                </div>
 
-                <div id="div_aguardar" class="loading-div">
-                    <img src="./assets/circle-loading.gif" id="loading-gif">
-                </div>
-
-                <div id="div_erros_login"></div>
-            </div>
+        <div class="campo">
+          <label for="ipt_senha">Senha</label>
+          <div class="campo-senha">
+            <input id="ipt_senha" type="password" placeholder="Sua senha">
+            <button type="button" class="ver-senha" onclick="verSenha('ipt_senha', this)">Mostrar</button>
+          </div>
         </div>
-    </div>
 
-    <!--footer inicio-->
-    <div class="footer">
-        <div class="container">
-            <h4>Feito com amor por aluno &hearts; SPTech &copy; 2023-2026</h4>
-        </div>
-    </div>
-    <!--footer fim-->
+        <button class="btn btn-dourado" onclick="logar()">Entrar</button>
 
+        <div id="div_msg" class="mensagem erro"></div>
+        <div id="div_msgCerto" class="mensagem sucesso"></div>
+
+        <p class="auth-troca">Ainda não tem conta? <a href="cadastro.html">Cadastre-se</a></p>
+      </div>
+
+    </section>
+  </main>
+
+  <footer class="rodape">
+    <p>J&M - Uma História que Virou Música. Projeto feito por João Pedro Sakamoto Murata Hashimoto.</p>
+  </footer>
+
+  <script src="./js/conta.js"></script>
 </body>
 
 </html>
 
 <script>
+  let tentativas = 3;
 
+  function logar() {
+    let email = ipt_email.value;
+    let senha = ipt_senha.value;
 
-    function entrar() {
-        aguardar();
+    let emailBrandao = "brandao.corporativo@gmail.com";
+    let emailJulia = "julia.corporativo@gmail.com";
+    let emailMarcos = "marcos.corporativo@gmail.com";
 
-        var emailVar = email_input.value;
-        var senhaVar = senha_input.value;
+    let senhaBrandao = "@Rotina123";
+    let senhaJulia = "@RotasControlesModulo123";
+    let senhaMarcos = "@Escopo123";
 
-        if (emailVar == "" || senhaVar == "") {
-            cardErro.style.display = "block"
-            mensagem_erro.innerHTML = "(Mensagem de erro para todos os campos em branco)";
-            finalizarAguardar();
-            return false;
+    if (tentativas < 1) {
+      div_msg.innerHTML = "Bloqueado temporariamente por excesso de tentativas";
+      div_msgCerto.innerHTML = "";
+    } else {
+
+      let loginValido =
+        (email == emailBrandao && senha == senhaBrandao) ||
+        (email == emailJulia && senha == senhaJulia) ||
+        (email == emailMarcos && senha == senhaMarcos);
+
+      if (loginValido) {
+        div_msg.innerHTML = "";
+        div_msgCerto.innerHTML = "Entrou";
+
+        // guarda a sessão para o menu mostrar o "Sair"
+        sessionStorage.EMAIL_USUARIO = email;
+        sessionStorage.NOME_USUARIO = email;
+
+        setTimeout(function () {
+          window.location = "index.html";
+        }, 1000);
+
+      } else {
+        tentativas--;
+        div_msgCerto.innerHTML = "";
+
+        if (tentativas > 0) {
+          div_msg.innerHTML = `Login incorreto, tente novamente (Restam ${tentativas} tentativas)`;
+        } else {
+          div_msg.innerHTML = "Bloqueado temporariamente por excesso de tentativas";
         }
-        else {
-            setInterval(sumirMensagem, 5000)
-        }
-
-        console.log("FORM LOGIN: ", emailVar);
-        console.log("FORM SENHA: ", senhaVar);
-
-        fetch("/usuarios/autenticar", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                emailServer: emailVar,
-                senhaServer: senhaVar
-            })
-        }).then(function (resposta) {
-            console.log("ESTOU NO THEN DO entrar()!")
-
-            if (resposta.ok) {
-                console.log(resposta);
-
-                resposta.json().then(json => {
-                    console.log(json);
-                    console.log(JSON.stringify(json));
-                    sessionStorage.EMAIL_USUARIO = json.email;
-                    sessionStorage.NOME_USUARIO = json.nome;
-                    sessionStorage.ID_USUARIO = json.id;
-                    sessionStorage.AQUARIOS = JSON.stringify(json.aquarios)
-
-                    setTimeout(function () {
-                        window.location = "./dashboard/cards.html";
-                    }, 1000); // apenas para exibir o loading
-
-                });
-
-            } else {
-
-                console.log("Houve um erro ao tentar realizar o login!");
-
-                resposta.text().then(texto => {
-                    console.error(texto);
-                    finalizarAguardar(texto);
-                });
-            }
-
-        }).catch(function (erro) {
-            console.log(erro);
-        })
-
-        return false;
+      }
     }
+  }
 
-    function sumirMensagem() {
-        cardErro.style.display = "none"
+  function verSenha(id, botao) {
+    let campo = document.getElementById(id);
+
+    if (campo.type == "password") {
+      campo.type = "text";
+      botao.innerHTML = "Ocultar";
+    } else {
+      campo.type = "password";
+      botao.innerHTML = "Mostrar";
     }
-
+  }
 </script>

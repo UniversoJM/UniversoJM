@@ -1,211 +1,187 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 
 <head>
-  <meta charset="UTF-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Cadastro | Universo J&M</title>
 
-  <title>AquaTech | Cadastro</title>
-
-  <script src="./js/sessao.js"></script>
-
-  <link rel="stylesheet" href="./css/estilo.css" />
-  <link rel="icon" href="./assets/icon/favicon2.ico" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" />
+  <link rel="stylesheet" href="./css/estilo.css">
 </head>
 
-<body onload="listar()">
-  <!--header inicio-->
-  <div class="header">
-    <div class="container">
-      <h1 class="titulo">AquaTech</h1>
-      <ul class="navbar">
-        <li>
-          <a href="index.html">Inicial</a>
-        </li>
-        <li>
-          <a href="simulador.html">Simulador</a>
-        </li>
-        <li>|</li>
-        <li>
-          <a href="login.html">Login</a>
-        </li>
-        <li class="agora">
-          <a href="#">Cadastro</a>
-        </li>
-      </ul>
-    </div>
-  </div>
-  <!--header fim-->
+<body>
 
-  <div class="login">
-    <div class="alerta_erro">
-      <div class="card_erro" id="cardErro">
-        <span id="mensagem_erro"></span>
-      </div>
-    </div>
-    <div class="container">
-      <div class="card card-cadastro">
-        <h2>Bem-vindo!</h2>
-        <div class="formulario">
-          <!--
-                         Para inserir mais um campo, copie uma das inputs abaixo.
-                         Assim que inserir vá para o script abaixo.
-                     -->
-          <div class="campo">
-            <span>Código de ativação:</span>
-            <input id="codigo_input" type="text" placeholder="Insira aqui seu código" />
-          </div>
-          <div class="campo">
-            <span>Nome:</span>
-            <input id="nome_input" type="text" placeholder="Seu nome" />
-          </div>
-          <div class="campo">
-            <span>E-mail:</span>
-            <input id="email_input" type="text" placeholder="meuemail@provedor.com" />
-          </div>
-          <div class="campo">
-            <span>Senha:</span>
-            <input id="senha_input" type="password" placeholder="******" />
-          </div>
-          <div class="campo">
-            <span>Confirmação da Senha:</span>
-            <input id="confirmacao_senha_input" type="password" placeholder="******" />
-          </div>
-          <button class="botao" onclick="cadastrar()">Cadastrar</button>
+  <header class="topo">
+    <a href="index.html#home" class="logo">Universo J&M</a>
+    <nav class="menu">
+      <a href="index.html#home">Home</a>
+      <a href="index.html#historia">História</a>
+      <a href="index.html#discografia">Discografia</a>
+      <a href="quiz.html">Quiz</a>
+      <a href="resultados.html">Resultados</a>
+      <a href="login.html" id="link-conta">Entrar</a>
+      <button type="button" id="btn-sair" class="btn-sair escondido" onclick="sair()">Sair</button>
+    </nav>
+  </header>
+
+  <main class="auth">
+    <section class="auth-card">
+
+      <div class="auth-lateral">
+        <img src="./assets/imgs/JM4.webp" alt="Jorge e Mateus">
+        <div class="auth-lateral-texto">
+          <span class="chamada-topo">Jorge &amp; Mateus</span>
+          <p class="auth-frase">Crie a sua conta e descubra o quanto você conhece da dupla.</p>
         </div>
-        <div id="div_aguardar" class="loading-div">
-          <img src="./assets/circle-loading.gif" id="loading-gif" />
+      </div>
+
+      <div class="auth-form">
+        <h1>Crie a sua conta</h1>
+        <p class="auth-sub">Leva menos de um minuto.</p>
+
+        <div class="campo">
+          <label for="ipt_nome">Nome</label>
+          <input id="ipt_nome" type="text" placeholder="Seu nome">
+          <div id="div_nomeInvalido" class="aviso"></div>
         </div>
 
-        <div id="div_erros_login"></div>
-      </div>
-    </div>
-  </div>
+        <div class="campo">
+          <label for="ipt_email">E-mail</label>
+          <input id="ipt_email" type="email" placeholder="meuemail@provedor.com">
+          <div id="div_emailInvalido" class="aviso"></div>
+        </div>
 
-  <!--footer inicio-->
-  <div class="footer">
-    <div class="container">
-      <h4>Feito com amor por aluno &hearts; SPTech &copy; 2023-2026</h4>
-    </div>
-  </div>
-  <!--footer fim-->
+        <div class="campo">
+          <label for="ipt_senha">Senha</label>
+          <div class="campo-senha">
+            <input id="ipt_senha" type="password" placeholder="Mínimo de 8 caracteres">
+            <button type="button" class="ver-senha" onclick="verSenha('ipt_senha', this)">Mostrar</button>
+          </div>
+          <div id="div_fraca" class="aviso"></div>
+          <div id="div_forte" class="aviso ok"></div>
+        </div>
+
+        <div class="campo">
+          <label for="ipt_confirmarSenha">Confirme a senha</label>
+          <div class="campo-senha">
+            <input id="ipt_confirmarSenha" type="password" placeholder="Repita a senha">
+            <button type="button" class="ver-senha" onclick="verSenha('ipt_confirmarSenha', this)">Mostrar</button>
+          </div>
+          <div id="div_senhaDif" class="aviso"></div>
+        </div>
+
+        <button class="btn btn-dourado" onclick="cadastrar()">Cadastrar</button>
+
+        <div id="div_msg" class="mensagem erro"></div>
+        <div id="div_msgCerto" class="mensagem sucesso"></div>
+
+        <p class="auth-troca">Já tem conta? <a href="login.html">Entrar</a></p>
+      </div>
+
+    </section>
+  </main>
+
+  <footer class="rodape">
+    <p>J&M - Uma História que Virou Música. Projeto feito por João Pedro Sakamoto Murata Hashimoto.</p>
+  </footer>
+
+  <script src="./js/conta.js"></script>
 </body>
 
 </html>
 
 <script>
-
-  // Array para armazenar empresas cadastradas para validação de código de ativação 
-  let listaEmpresasCadastradas = [];
-
   function cadastrar() {
-    // aguardar();
+    // .trim tira os espaços do começo e do fim
+    let nome = ipt_nome.value.trim();
+    let email = ipt_email.value.trim();
+    let senha = ipt_senha.value.trim();
+    let confirmarSenha = ipt_confirmarSenha.value.trim();
 
-    //Recupere o valor da nova input pelo nome do id
-    // Agora vá para o método fetch logo abaixo
-    var nomeVar = nome_input.value;
-    var emailVar = email_input.value;
-    var senhaVar = senha_input.value;
-    var confirmacaoSenhaVar = confirmacao_senha_input.value;
-    var codigoVar = codigo_input.value;
-    var idEmpresaVincular
+    let nomeInvalido = true;
+    let emailInvalido = true;
+    let senhaInvalida = true;
+    let cfmSenhaInvalido = true;
 
-    // Verificando se há algum campo em branco
-    if (
-      nomeVar == "" ||
-      emailVar == "" ||
-      senhaVar == "" ||
-      confirmacaoSenhaVar == "" ||
-      codigoVar == ""
-    ) {
-      cardErro.style.display = "block";
-      mensagem_erro.innerHTML =
-        "(Mensagem de erro para todos os campos em branco)";
+    let temMaius = false;
+    let temMinus = false;
+    let temNum = false;
+    let temSimb = false;
+    let numerosPermitidos = "0123456789";
+    let simbolos = "!@#$%&*_-./";
 
-      finalizarAguardar();
-      return false;
+    let contarCaractere = 0;
+
+    // nome
+    if (nome.length >= 2) {
+      nomeInvalido = false;
+      div_nomeInvalido.innerHTML = "";
     } else {
-      setInterval(sumirMensagem, 5000);
+      div_nomeInvalido.innerHTML = "Digite seu nome.";
     }
 
-    // Verificando se o código de ativação é de alguma empresa cadastrada
-    for (let i = 0; i < listaEmpresasCadastradas.length; i++) {
-      if (listaEmpresasCadastradas[i].codigo_ativacao == codigoVar) {
-        idEmpresaVincular = listaEmpresasCadastradas[i].id
-        console.log("Código de ativação válido.");
-        break;
-      } else {
-        cardErro.style.display = "block";
-        mensagem_erro.innerHTML = "(Mensagem de erro para código inválido)";
-        finalizarAguardar();
-      }
+    // email: sem espaços, só um @ e domínio permitido
+    if (!email.includes(" ") && email.split("@").length == 2 && (
+      email.endsWith("@gmail.com") ||
+      email.endsWith("@hotmail.com") ||
+      email.endsWith("@outlook.com") ||
+      email.endsWith("@sptech.school")
+    )) {
+      emailInvalido = false;
+      div_emailInvalido.innerHTML = "";
+    } else {
+      div_emailInvalido.innerHTML = "Digite um email válido (gmail, hotmail, outlook ou sptech.school).";
     }
 
-    // Enviando o valor da nova input
-    fetch("/usuarios/cadastrar", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        // crie um atributo que recebe o valor recuperado aqui
-        // Agora vá para o arquivo routes/usuario.js
-        nomeServer: nomeVar,
-        emailServer: emailVar,
-        senhaServer: senhaVar,
-        idEmpresaVincularServer: idEmpresaVincular
-      }),
-    })
-      .then(function (resposta) {
-        console.log("resposta: ", resposta);
+    // senha: percorre cada caractere e marca o que ela tem
+    while (contarCaractere < senha.length) {
+      let caractere = senha[contarCaractere];
+      if (caractere >= "A" && caractere <= "Z") temMaius = true;
+      if (caractere >= "a" && caractere <= "z") temMinus = true;
+      if (numerosPermitidos.includes(caractere)) temNum = true;
+      if (simbolos.includes(caractere)) temSimb = true;
+      contarCaractere++;
+    }
 
-        if (resposta.ok) {
-          cardErro.style.display = "block";
+    if (temMaius && temMinus && temNum && temSimb && senha.length >= 8 && senha.length <= 45) {
+      div_forte.innerHTML = "Senha forte";
+      div_fraca.innerHTML = "";
+      senhaInvalida = false;
+    } else {
+      div_fraca.innerHTML = "Senha fraca: use de 8 a 45 caracteres, com maiúscula, minúscula, número e símbolo (! @ # $ % & * _ - . /).";
+      div_forte.innerHTML = "";
+    }
 
-          mensagem_erro.innerHTML =
-            "Cadastro realizado com sucesso! Redirecionando para tela de Login...";
+    // confirmação
+    if (confirmarSenha === senha && senha !== "") {
+      cfmSenhaInvalido = false;
+      div_senhaDif.innerHTML = "";
+    } else {
+      div_senhaDif.innerHTML = "As senhas são diferentes.";
+    }
 
-          setTimeout(() => {
-            window.location = "login.html";
-          }, "2000");
+    if (nomeInvalido || emailInvalido || senhaInvalida || cfmSenhaInvalido) {
+      div_msg.innerHTML = "Preencha os dados corretamente.";
+      div_msgCerto.innerHTML = "";
+    } else {
+      div_msg.innerHTML = "";
+      div_msgCerto.innerHTML = "Cadastro realizado com sucesso! Redirecionando para o login...";
 
-          limparFormulario();
-          finalizarAguardar();
-        } else {
-          throw "Houve um erro ao tentar realizar o cadastro!";
-        }
-      })
-      .catch(function (resposta) {
-        console.log(`#ERRO: ${resposta}`);
-        finalizarAguardar();
-      });
-
-    return false;
+      setTimeout(function () {
+        window.location = "login.html";
+      }, 2000);
+    }
   }
 
-  // Listando empresas cadastradas 
-  function listar() {
-    fetch("/empresas/listar", {
-      method: "GET",
-    })
-      .then(function (resposta) {
-        resposta.json().then((empresas) => {
-          empresas.forEach((empresa) => {
-            listaEmpresasCadastradas.push(empresa);
+  function verSenha(id, botao) {
+    let campo = document.getElementById(id);
 
-            console.log("listaEmpresasCadastradas")
-            console.log(listaEmpresasCadastradas[0].codigo_ativacao)
-          });
-        });
-      })
-      .catch(function (resposta) {
-        console.log(`#ERRO: ${resposta}`);
-      });
-  }
-
-  function sumirMensagem() {
-    cardErro.style.display = "none";
+    if (campo.type == "password") {
+      campo.type = "text";
+      botao.innerHTML = "Ocultar";
+    } else {
+      campo.type = "password";
+      botao.innerHTML = "Mostrar";
+    }
   }
 </script>
