@@ -4,9 +4,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Entrar | Universo J&M</title>
+  <title>Login | Universo J&M</title>
 
-  <link rel="stylesheet" href="./css/estilo.css">
+  <link rel="stylesheet" href="./css/loginCadastro.css">
 </head>
 
 <body>
@@ -41,14 +41,14 @@
 
         <div class="campo">
           <label for="ipt_email">E-mail</label>
-          <input id="ipt_email" type="email" placeholder="meuemail@provedor.com">
+          <input id="ipt_email" type="email" placeholder="email">
         </div>
 
         <div class="campo">
           <label for="ipt_senha">Senha</label>
           <div class="campo-senha">
             <input id="ipt_senha" type="password" placeholder="Sua senha">
-            <button type="button" class="ver-senha" onclick="verSenha('ipt_senha', this)">Mostrar</button>
+            <button type="button" class="ver-senha" onclick="verSenha(ipt_senha, this)">Mostrar</button>
           </div>
         </div>
 
@@ -66,8 +66,6 @@
   <footer class="rodape">
     <p>J&M - Uma História que Virou Música. Projeto feito por João Pedro Sakamoto Murata Hashimoto.</p>
   </footer>
-
-  <script src="./js/conta.js"></script>
 </body>
 
 </html>
@@ -76,38 +74,42 @@
   let tentativas = 3;
 
   function logar() {
-    let email = ipt_email.value;
-    let senha = ipt_senha.value;
+    let email = ipt_email.value.trim();
+    let senha = ipt_senha.value.trim();
 
-    let emailBrandao = "brandao.corporativo@gmail.com";
-    let emailJulia = "julia.corporativo@gmail.com";
-    let emailMarcos = "marcos.corporativo@gmail.com";
+    // vetor com os domínios de email permitidos
+    let dominios = ["@gmail.com", "@hotmail.com", "@outlook.com", "@sptech.school"];
 
-    let senhaBrandao = "@Rotina123";
-    let senhaJulia = "@RotasControlesModulo123";
-    let senhaMarcos = "@Escopo123";
+    let dominioValido = false;
+    for (let i = 0; i < dominios.length; i++) {
+      if (email.endsWith(dominios[i])) {
+        dominioValido = true;
+      }
+    }
 
     if (tentativas < 1) {
       div_msg.innerHTML = "Bloqueado temporariamente por excesso de tentativas";
       div_msgCerto.innerHTML = "";
+    } else if (email.length == 0 || senha.length == 0) {
+      div_msg.innerHTML = "Preencha o e-mail e a senha.";
+      div_msgCerto.innerHTML = "";
+    } else if (dominioValido == false || email.includes(" ") || email.split("@").length != 2) {
+      div_msg.innerHTML = "Digite um email válido (gmail, hotmail, outlook ou sptech.school).";
+      div_msgCerto.innerHTML = "";
     } else {
 
-      let loginValido =
-        (email == emailBrandao && senha == senhaBrandao) ||
-        (email == emailJulia && senha == senhaJulia) ||
-        (email == emailMarcos && senha == senhaMarcos);
+      // AQUI VAI A CONEXÃO COM O BANCO DE DADOS
+      // quando o back-end responder, troque o false abaixo pelo resultado da consulta
+      let loginValido = false;
 
       if (loginValido) {
         div_msg.innerHTML = "";
-        div_msgCerto.innerHTML = "Entrou";
 
         // guarda a sessão para o menu mostrar o "Sair"
         sessionStorage.EMAIL_USUARIO = email;
         sessionStorage.NOME_USUARIO = email;
 
-        setTimeout(function () {
-          window.location = "index.html";
-        }, 1000);
+        window.location = "index.html";
 
       } else {
         tentativas--;
@@ -122,9 +124,7 @@
     }
   }
 
-  function verSenha(id, botao) {
-    let campo = document.getElementById(id);
-
+  function verSenha(campo, botao) {
     if (campo.type == "password") {
       campo.type = "text";
       botao.innerHTML = "Ocultar";

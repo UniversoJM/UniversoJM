@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Cadastro | Universo J&M</title>
 
-  <link rel="stylesheet" href="./css/estilo.css">
+  <link rel="stylesheet" href="./css/loginCadastro.css">
 </head>
 
 <body>
@@ -47,7 +47,7 @@
 
         <div class="campo">
           <label for="ipt_email">E-mail</label>
-          <input id="ipt_email" type="email" placeholder="meuemail@provedor.com">
+          <input id="ipt_email" type="email" placeholder="email">
           <div id="div_emailInvalido" class="aviso"></div>
         </div>
 
@@ -55,7 +55,7 @@
           <label for="ipt_senha">Senha</label>
           <div class="campo-senha">
             <input id="ipt_senha" type="password" placeholder="Mínimo de 8 caracteres">
-            <button type="button" class="ver-senha" onclick="verSenha('ipt_senha', this)">Mostrar</button>
+            <button type="button" class="ver-senha" onclick="verSenha(ipt_senha, this)">Mostrar</button>
           </div>
           <div id="div_fraca" class="aviso"></div>
           <div id="div_forte" class="aviso ok"></div>
@@ -65,7 +65,7 @@
           <label for="ipt_confirmarSenha">Confirme a senha</label>
           <div class="campo-senha">
             <input id="ipt_confirmarSenha" type="password" placeholder="Repita a senha">
-            <button type="button" class="ver-senha" onclick="verSenha('ipt_confirmarSenha', this)">Mostrar</button>
+            <button type="button" class="ver-senha" onclick="verSenha(ipt_confirmarSenha, this)">Mostrar</button>
           </div>
           <div id="div_senhaDif" class="aviso"></div>
         </div>
@@ -84,8 +84,6 @@
   <footer class="rodape">
     <p>J&M - Uma História que Virou Música. Projeto feito por João Pedro Sakamoto Murata Hashimoto.</p>
   </footer>
-
-  <script src="./js/conta.js"></script>
 </body>
 
 </html>
@@ -107,10 +105,17 @@
     let temMinus = false;
     let temNum = false;
     let temSimb = false;
-    let numerosPermitidos = "0123456789";
-    let simbolos = "!@#$%&*_-./";
 
-    let contarCaractere = 0;
+    // vetores com os caracteres permitidos
+    let maiusculas = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M",
+      "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"];
+    let minusculas = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m",
+      "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
+    let numeros = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
+    let simbolos = ["!", "@", "#", "$", "%", "&", "*", "_", "-", ".", "/"];
+
+    // vetor com os domínios de email permitidos
+    let dominios = ["@gmail.com", "@hotmail.com", "@outlook.com", "@sptech.school"];
 
     // nome
     if (nome.length >= 2) {
@@ -121,12 +126,14 @@
     }
 
     // email: sem espaços, só um @ e domínio permitido
-    if (!email.includes(" ") && email.split("@").length == 2 && (
-      email.endsWith("@gmail.com") ||
-      email.endsWith("@hotmail.com") ||
-      email.endsWith("@outlook.com") ||
-      email.endsWith("@sptech.school")
-    )) {
+    let dominioValido = false;
+    for (let i = 0; i < dominios.length; i++) {
+      if (email.endsWith(dominios[i])) {
+        dominioValido = true;
+      }
+    }
+
+    if (email.includes(" ") == false && email.split("@").length == 2 && dominioValido) {
       emailInvalido = false;
       div_emailInvalido.innerHTML = "";
     } else {
@@ -134,13 +141,13 @@
     }
 
     // senha: percorre cada caractere e marca o que ela tem
-    while (contarCaractere < senha.length) {
-      let caractere = senha[contarCaractere];
-      if (caractere >= "A" && caractere <= "Z") temMaius = true;
-      if (caractere >= "a" && caractere <= "z") temMinus = true;
-      if (numerosPermitidos.includes(caractere)) temNum = true;
+    for (let i = 0; i < senha.length; i++) {
+      let caractere = senha[i];
+
+      if (maiusculas.includes(caractere)) temMaius = true;
+      if (minusculas.includes(caractere)) temMinus = true;
+      if (numeros.includes(caractere)) temNum = true;
       if (simbolos.includes(caractere)) temSimb = true;
-      contarCaractere++;
     }
 
     if (temMaius && temMinus && temNum && temSimb && senha.length >= 8 && senha.length <= 45) {
@@ -153,7 +160,7 @@
     }
 
     // confirmação
-    if (confirmarSenha === senha && senha !== "") {
+    if (confirmarSenha == senha && senha.length > 0) {
       cfmSenhaInvalido = false;
       div_senhaDif.innerHTML = "";
     } else {
@@ -165,17 +172,11 @@
       div_msgCerto.innerHTML = "";
     } else {
       div_msg.innerHTML = "";
-      div_msgCerto.innerHTML = "Cadastro realizado com sucesso! Redirecionando para o login...";
-
-      setTimeout(function () {
-        window.location = "login.html";
-      }, 2000);
+      window.location = "login.html";
     }
   }
 
-  function verSenha(id, botao) {
-    let campo = document.getElementById(id);
-
+  function verSenha(campo, botao) {
     if (campo.type == "password") {
       campo.type = "text";
       botao.innerHTML = "Ocultar";
