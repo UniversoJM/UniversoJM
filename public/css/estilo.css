@@ -507,3 +507,21 @@ button:focus-visible {
       linear-gradient(150deg, #191714 0%, #121212 70%, #1a1712 100%);
   }
 }
+
+.logo {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--dourado);
+  text-decoration: none;
+  display: inline-flex;     
+  align-items: center;      
+  gap: 0.4rem;             
+}
+
+.logo-img {
+  height: 3.4rem;
+  width: auto;
+  margin: -11px 0 -11px -60px;
+  display: block;
+}
