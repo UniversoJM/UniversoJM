@@ -20,24 +20,24 @@
       <a href="quiz.html">Quiz</a>
       <a href="resultados.html">Resultados</a>
       <a href="login.html" id="link-conta">Entrar</a>
-      <button type="button" id="btn-sair" class="btn-sair escondido" onclick="sair()">Sair</button>
+      <button type="button" id="btn-sair" class="botao-sair escondido" onclick="sair()">Sair</button>
     </nav>
   </header>
 
-  <main class="auth">
-    <section class="auth-card">
+  <main class="acesso">
+    <section class="caixa-acesso">
 
-      <div class="auth-lateral">
+      <div class="lateral">
         <img src="./assets/imgs/JM4.webp" alt="Jorge e Mateus">
-        <div class="auth-lateral-texto">
+        <div class="lateral-texto">
           <span class="chamada-topo">Jorge &amp; Mateus</span>
-          <p class="auth-frase">Crie a sua conta e descubra o quanto você conhece da dupla.</p>
+          <p class="lateral-frase">Crie sua conta para jogar o quiz e guardar a sua pontuação.</p>
         </div>
       </div>
 
-      <div class="auth-form">
+      <div class="formulario">
         <h1>Crie a sua conta</h1>
-        <p class="auth-sub">Leva menos de um minuto.</p>
+        <p class="subtitulo">Preencha os dados abaixo para se cadastrar.</p>
 
         <div class="campo">
           <label for="ipt_nome">Nome</label>
@@ -54,15 +54,15 @@
         <div class="campo">
           <label for="ipt_senha">Senha</label>
           <div class="campo-senha">
-            <input id="ipt_senha" type="password" placeholder="Mínimo de 8 caracteres">
+            <input id="ipt_senha" type="password" placeholder="Sua senha">
             <button type="button" class="ver-senha" onclick="verSenha(ipt_senha, this)">Mostrar</button>
           </div>
-          <div id="div_fraca" class="aviso"></div>
           <div id="div_forte" class="aviso ok"></div>
+          <div id="div_fraca" class="aviso"></div>
         </div>
 
         <div class="campo">
-          <label for="ipt_confirmarSenha">Confirme a senha</label>
+          <label for="ipt_confirmarSenha">Confirmar senha</label>
           <div class="campo-senha">
             <input id="ipt_confirmarSenha" type="password" placeholder="Repita a senha">
             <button type="button" class="ver-senha" onclick="verSenha(ipt_confirmarSenha, this)">Mostrar</button>
@@ -70,12 +70,12 @@
           <div id="div_senhaDif" class="aviso"></div>
         </div>
 
-        <button class="btn btn-dourado" onclick="cadastrar()">Cadastrar</button>
+        <button class="botao botao-dourado" onclick="cadastrar()">Cadastrar</button>
 
         <div id="div_msg" class="mensagem erro"></div>
         <div id="div_msgCerto" class="mensagem sucesso"></div>
 
-        <p class="auth-troca">Já tem conta? <a href="login.html">Entrar</a></p>
+        <p class="troca-pagina">Já tem conta? <a href="login.html">Entrar</a></p>
       </div>
 
     </section>

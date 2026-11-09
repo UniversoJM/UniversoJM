@@ -94,7 +94,7 @@ button:focus-visible {
 }
 
 /* BOTÃO SAIR (menu) */
-.btn-sair {
+.botao-sair {
   background: transparent;
   border: 1px solid var(--borda);
   color: var(--texto-suave);
@@ -105,7 +105,7 @@ button:focus-visible {
   cursor: pointer;
 }
 
-.btn-sair:hover {
+.botao-sair:hover {
   color: var(--dourado-claro);
   border-color: var(--dourado);
 }
@@ -115,7 +115,7 @@ button:focus-visible {
 }
 
 /* BOTÕES */
-.btn {
+.botao {
   display: inline-block;
   text-align: center;
   text-decoration: none;
@@ -129,12 +129,12 @@ button:focus-visible {
   transition: background 0.2s;
 }
 
-.btn-dourado {
+.botao-dourado {
   background: var(--dourado);
   color: #1a1405;
 }
 
-.btn-dourado:hover {
+.botao-dourado:hover {
   background: var(--dourado-claro);
 }
 
@@ -148,7 +148,7 @@ button:focus-visible {
 }
 
 /* LOGIN E CADASTRO */
-.auth {
+.acesso {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -160,7 +160,7 @@ button:focus-visible {
     linear-gradient(120deg, #1b1916 0%, #121212 52%, #1a1712 100%);
 }
 
-.auth-card {
+.caixa-acesso {
   display: grid;
   grid-template-columns: 1fr 1fr;
   width: 100%;
@@ -172,12 +172,12 @@ button:focus-visible {
   box-shadow: 0 16px 36px rgba(0, 0, 0, 0.34);
 }
 
-.auth-lateral {
+.lateral {
   position: relative;
   min-height: 100%;
 }
 
-.auth-lateral img {
+.lateral img {
   position: absolute;
   inset: 0;
   width: 100%;
@@ -186,20 +186,20 @@ button:focus-visible {
   object-position: center 20%;
 }
 
-.auth-form {
+.formulario {
   display: flex;
   flex-direction: column;
   justify-content: center;
   padding: 3rem 2.6rem;
 }
 
-.auth-form h1 {
+.formulario h1 {
   font-size: 2.1rem;
   color: var(--dourado-claro);
   margin-bottom: 1.8rem;
 }
 
-.auth-sub {
+.subtitulo {
   color: var(--texto-suave);
   margin: -0.8rem 0 1.8rem;
 }
@@ -263,12 +263,12 @@ button:focus-visible {
   text-decoration: underline;
 }
 
-.auth-form .btn {
+.formulario .botao {
   width: 100%;
   margin-top: 0.6rem;
 }
 
-.auth-form .btn:disabled {
+.formulario .botao:disabled {
   opacity: 0.6;
   cursor: not-allowed;
 }
@@ -314,13 +314,46 @@ button:focus-visible {
   display: none;
 }
 
-.auth-troca {
+.troca-pagina {
   margin-top: 1.6rem;
   text-align: center;
   color: var(--texto-suave);
   font-size: 0.92rem;
 }
 
-.auth-troca a {
+.troca-pagina a {
   color: var(--dourado-claro);
+}
+
+.lateral-texto {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 2rem 1.8rem;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.85), transparent);
+}
+
+.chamada-topo {
+  display: block;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--dourado-claro);
+  margin-bottom: 0.4rem;
+}
+
+.lateral-frase {
+  color: var(--texto);
+  font-size: 0.95rem;
+}
+
+@media (max-width: 700px) {
+  .caixa-acesso {
+    grid-template-columns: 1fr;
+  }
+
+  .lateral {
+    min-height: 220px;
+  }
 }

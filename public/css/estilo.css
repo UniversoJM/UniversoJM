@@ -111,7 +111,7 @@ button:focus-visible {
 }
 
 /* BOTÃO SAIR (menu) */
-.btn-sair {
+.botao-sair {
   background: transparent;
   border: 1px solid var(--borda);
   color: var(--texto-suave);
@@ -122,7 +122,7 @@ button:focus-visible {
   cursor: pointer;
 }
 
-.btn-sair:hover {
+.botao-sair:hover {
   color: var(--dourado-claro);
   border-color: var(--dourado);
 }
@@ -202,7 +202,7 @@ button:focus-visible {
   gap: 1rem;
 }
 
-.btn {
+.botao {
   display: inline-block;
   text-align: center;
   text-decoration: none;
@@ -216,19 +216,19 @@ button:focus-visible {
   transition: background 0.2s;
 }
 
-.btn-dourado {
+.botao-dourado {
   background: var(--dourado);
   color: #1a1405;
 }
 
-.btn-dourado:hover { background: var(--dourado-claro); }
+.botao-dourado:hover { background: var(--dourado-claro); }
 
-.btn-borda {
+.botao-borda {
   background: rgba(18, 18, 18, 0.4);
   color: var(--dourado-claro);
 }
 
-.btn-borda:hover { background: rgba(201, 162, 75, 0.15); }
+.botao-borda:hover { background: rgba(201, 162, 75, 0.15); }
 
 /* HISTÓRIA */
 .secao-escura {
@@ -395,7 +395,6 @@ button:focus-visible {
   font-size: 0.9rem;
 }
 
-/* CELULAR */
 @media (max-width: 760px) {
   h2 { font-size: 2rem; }
 

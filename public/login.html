@@ -20,24 +20,24 @@
       <a href="quiz.html">Quiz</a>
       <a href="resultados.html">Resultados</a>
       <a href="login.html" id="link-conta">Entrar</a>
-      <button type="button" id="btn-sair" class="btn-sair escondido" onclick="sair()">Sair</button>
+      <button type="button" id="btn-sair" class="botao-sair escondido" onclick="sair()">Sair</button>
     </nav>
   </header>
 
-  <main class="auth">
-    <section class="auth-card">
+  <main class="acesso">
+    <section class="caixa-acesso">
 
-      <div class="auth-lateral">
+      <div class="lateral">
         <img src="./assets/imgs/JM4.webp" alt="Jorge e Mateus">
-        <div class="auth-lateral-texto">
+        <div class="lateral-texto">
           <span class="chamada-topo">Jorge &amp; Mateus</span>
-          <p class="auth-frase">Entre para jogar o quiz e guardar a sua pontuação.</p>
+          <p class="lateral-frase">Entre para jogar o quiz e guardar a sua pontuação.</p>
         </div>
       </div>
 
-      <div class="auth-form">
+      <div class="formulario">
         <h1>Que bom te ver de novo</h1>
-        <p class="auth-sub">Entre com o seu e-mail e a sua senha.</p>
+        <p class="subtitulo">Entre com o seu e-mail e a sua senha.</p>
 
         <div class="campo">
           <label for="ipt_email">E-mail</label>
@@ -52,12 +52,12 @@
           </div>
         </div>
 
-        <button class="btn btn-dourado" onclick="logar()">Entrar</button>
+        <button class="botao botao-dourado" onclick="logar()">Entrar</button>
 
         <div id="div_msg" class="mensagem erro"></div>
         <div id="div_msgCerto" class="mensagem sucesso"></div>
 
-        <p class="auth-troca">Ainda não tem conta? <a href="cadastro.html">Cadastre-se</a></p>
+        <p class="troca-pagina">Ainda não tem conta? <a href="cadastro.html">Cadastre-se</a></p>
       </div>
 
     </section>
@@ -98,8 +98,6 @@
       div_msgCerto.innerHTML = "";
     } else {
 
-      // AQUI VAI A CONEXÃO COM O BANCO DE DADOS
-      // quando o back-end responder, troque o false abaixo pelo resultado da consulta
       let loginValido = false;
 
       if (loginValido) {
