@@ -8,14 +8,11 @@
   --dourado-claro: #e3c97a;
 }
 
+/* Zera as margens padrão do navegador */
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-}
-
-html {
-  scroll-behavior: smooth;
 }
 
 body {
@@ -31,13 +28,14 @@ h1 {
   line-height: 1.15;
 }
 
+/* Contorno dourado ao navegar pelo teclado (Tab) */
 a:focus-visible,
 button:focus-visible {
   outline: 2px solid var(--dourado-claro);
   outline-offset: 3px;
 }
 
-/* MENU */
+/* MENU DO TOPO */
 .topo {
   display: flex;
   justify-content: space-between;
@@ -81,7 +79,7 @@ button:focus-visible {
   border-bottom-color: var(--dourado);
 }
 
-/* botão Entrar */
+/* Link "Entrar" com borda dourada */
 #link-conta {
   color: var(--dourado-claro);
   border: 1px solid var(--dourado);
@@ -93,7 +91,7 @@ button:focus-visible {
   background: rgba(201, 162, 75, 0.12);
 }
 
-/* BOTÃO SAIR (menu) */
+/* Botão "Sair" do menu */
 .botao-sair {
   background: transparent;
   border: 1px solid var(--borda);
@@ -116,9 +114,6 @@ button:focus-visible {
 
 /* BOTÕES */
 .botao {
-  display: inline-block;
-  text-align: center;
-  text-decoration: none;
   font-family: inherit;
   font-size: 1rem;
   font-weight: 500;
@@ -148,6 +143,8 @@ button:focus-visible {
 }
 
 /* LOGIN E CADASTRO */
+
+/* Área inteira atrás da caixa, com o fundo em degradê */
 .acesso {
   display: flex;
   align-items: center;
@@ -160,6 +157,7 @@ button:focus-visible {
     linear-gradient(120deg, #1b1916 0%, #121212 52%, #1a1712 100%);
 }
 
+/* Caixa dividida em 2 colunas: foto (esquerda) e formulário (direita) */
 .caixa-acesso {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -172,6 +170,7 @@ button:focus-visible {
   box-shadow: 0 16px 36px rgba(0, 0, 0, 0.34);
 }
 
+/* Coluna da foto */
 .lateral {
   position: relative;
   min-height: 100%;
@@ -186,6 +185,7 @@ button:focus-visible {
   object-position: center 20%;
 }
 
+/* Coluna do formulário */
 .formulario {
   display: flex;
   flex-direction: column;
@@ -204,6 +204,7 @@ button:focus-visible {
   margin: -0.8rem 0 1.8rem;
 }
 
+/* CAMPOS DO FORMULÁRIO */
 .campo {
   margin-bottom: 1.1rem;
 }
@@ -231,12 +232,14 @@ button:focus-visible {
   color: #6d6a63;
 }
 
+/* Borda dourada quando o campo está selecionado */
 .campo input:focus {
   outline: none;
   border-color: var(--dourado);
   box-shadow: 0 0 0 3px rgba(201, 162, 75, 0.18);
 }
 
+/* Campo de senha com o botão "Mostrar" dentro */
 .campo-senha {
   position: relative;
 }
@@ -263,18 +266,14 @@ button:focus-visible {
   text-decoration: underline;
 }
 
+/* Botão Entrar / Cadastrar ocupa a largura toda */
 .formulario .botao {
   width: 100%;
   margin-top: 0.6rem;
 }
 
-.formulario .botao:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
-}
-
+/* Caixa de mensagem geral (erro ou sucesso) */
 .mensagem {
-  display: none;
   margin-top: 1rem;
   padding: 0.75rem 1rem;
   border: 1px solid;
@@ -283,23 +282,21 @@ button:focus-visible {
 }
 
 .mensagem.erro {
-  display: block;
   color: #f1a7a0;
   background: rgba(200, 70, 60, 0.1);
   border-color: rgba(200, 70, 60, 0.45);
 }
 
 .mensagem.sucesso {
-  display: block;
   color: #a9d9a5;
   background: rgba(90, 170, 90, 0.1);
   border-color: rgba(90, 170, 90, 0.45);
 }
 
+/* Se não tem texto dentro, a caixa some */
 .mensagem:empty {
   display: none;
 }
-
 .aviso {
   margin-top: 0.35rem;
   font-size: 0.82rem;
@@ -323,37 +320,4 @@ button:focus-visible {
 
 .troca-pagina a {
   color: var(--dourado-claro);
-}
-
-.lateral-texto {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  padding: 2rem 1.8rem;
-  background: linear-gradient(to top, rgba(0, 0, 0, 0.85), transparent);
-}
-
-.chamada-topo {
-  display: block;
-  font-family: Georgia, "Times New Roman", serif;
-  font-size: 1.4rem;
-  font-weight: 700;
-  color: var(--dourado-claro);
-  margin-bottom: 0.4rem;
-}
-
-.lateral-frase {
-  color: var(--texto);
-  font-size: 0.95rem;
-}
-
-@media (max-width: 700px) {
-  .caixa-acesso {
-    grid-template-columns: 1fr;
-  }
-
-  .lateral {
-    min-height: 220px;
-  }
 }
