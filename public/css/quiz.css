@@ -1,0 +1,346 @@
+:root {
+  --fundo: #121212;
+  --fundo-cartao: #1c1c1c;
+  --borda: #333333;
+  --texto: #f2efe8;
+  --texto-suave: #aaa69c;
+  --dourado: #c9a24b;
+  --dourado-claro: #e3c97a;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--fundo);
+  color: var(--texto);
+  font-family: Arial, Helvetica, sans-serif;
+  line-height: 1.6;
+}
+
+h1 {
+  font-family: Georgia, "Times New Roman", serif;
+  font-weight: 700;
+  line-height: 1.15;
+}
+
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid var(--dourado-claro);
+  outline-offset: 3px;
+}
+
+/* MENU */
+.topo {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+  padding: 16px 5%;
+  border-bottom: 1px solid var(--borda);
+  position: sticky;
+  top: 0;
+  background: var(--fundo);
+  z-index: 10;
+}
+
+.logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 29px;
+  font-weight: 700;
+  color: var(--dourado);
+  text-decoration: none;
+}
+
+.logo-img {
+  height: 54px;
+  width: auto;
+  margin: -11px 0 -11px -60px;
+}
+
+.menu {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 29px;
+}
+
+.menu a {
+  color: var(--texto-suave);
+  text-decoration: none;
+  font-size: 15px;
+  padding-bottom: 2px;
+  border-bottom: 2px solid transparent;
+  transition: color 0.2s;
+}
+
+.menu a:hover {
+  color: var(--dourado-claro);
+  border-bottom-color: var(--dourado);
+}
+
+/* botão Entrar */
+#link-conta {
+  color: var(--dourado-claro);
+  border: 1px solid var(--dourado);
+  border-radius: 6px;
+  padding: 6px 16px;
+}
+
+#link-conta:hover {
+  background: rgba(201, 162, 75, 0.12);
+}
+
+/* botão Sair */
+.botao-sair {
+  background: transparent;
+  border: 1px solid var(--borda);
+  color: var(--texto-suave);
+  border-radius: 6px;
+  padding: 6px 16px;
+  font-family: inherit;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+.botao-sair:hover {
+  color: var(--dourado-claro);
+  border-color: var(--dourado);
+}
+
+.escondido {
+  display: none !important;
+}
+
+/* BOTÕES */
+.botoes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.botao {
+  display: inline-block;
+  text-align: center;
+  text-decoration: none;
+  font-family: inherit;
+  font-size: 16px;
+  font-weight: 500;
+  padding: 14px 29px;
+  border-radius: 6px;
+  cursor: pointer;
+  border: 1px solid var(--dourado);
+  transition: background 0.2s;
+}
+
+.botao-dourado {
+  background: var(--dourado);
+  color: #1a1405;
+}
+
+.botao-dourado:hover { background: var(--dourado-claro); }
+
+.botao-borda {
+  background: rgba(18, 18, 18, 0.4);
+  color: var(--dourado-claro);
+}
+
+.botao-borda:hover { background: rgba(201, 162, 75, 0.15); }
+
+/* RODAPÉ */
+.rodape {
+  text-align: center;
+  padding: 32px 5%;
+  border-top: 1px solid var(--borda);
+  color: var(--texto-suave);
+  font-size: 14px;
+}
+
+/* QUIZ */
+
+/* área atrás da caixa, com o fundo em degradê */
+.quiz {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: calc(100vh - 150px);
+  padding: 48px 5%;
+  background:
+    radial-gradient(ellipse at 12% 18%, rgba(201, 162, 75, 0.09), transparent 42%),
+    radial-gradient(ellipse at 88% 100%, rgba(92, 61, 30, 0.16), transparent 46%),
+    linear-gradient(120deg, #1b1916 0%, #121212 52%, #1a1712 100%);
+}
+
+.caixa-quiz {
+  width: 100%;
+  max-width: 720px;
+  padding: 48px 42px;
+  background: var(--fundo-cartao);
+  border: 1px solid var(--borda);
+  border-radius: 14px;
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.34);
+}
+
+.contador {
+  margin-bottom: 10px;
+  color: var(--texto-suave);
+  font-size: 14px;
+}
+
+/* barra de progresso */
+.barra {
+  height: 6px;
+  margin-bottom: 32px;
+  background: var(--borda);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.progresso {
+  width: 0;
+  height: 100%;
+  background: var(--dourado);
+  transition: width 0.3s;
+}
+
+.caixa-quiz h1 {
+  margin-bottom: 24px;
+  font-size: 29px;
+  color: var(--dourado-claro);
+}
+
+/* trecho de letra que aparece embaixo da pergunta */
+.trecho {
+  margin: -8px 0 24px;
+  color: var(--dourado-claro);
+  font-size: 20px;
+  font-style: italic;
+}
+
+.trecho:empty {
+  display: none;
+}
+
+/* OPÇÕES */
+.opcoes {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.opcao {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+  padding: 14px 18px;
+  background: var(--fundo);
+  border: 1px solid var(--borda);
+  border-radius: 6px;
+  color: var(--texto);
+  font-family: inherit;
+  font-size: 16px;
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s;
+}
+
+.opcao:hover {
+  border-color: var(--dourado);
+}
+
+.opcao.selecionada {
+  border-color: var(--dourado);
+  background: rgba(201, 162, 75, 0.12);
+}
+
+/* bolinha com a letra A, B, C, D */
+.letra {
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border: 1px solid var(--dourado);
+  border-radius: 50%;
+  color: var(--dourado-claro);
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.opcao.selecionada .letra {
+  background: var(--dourado);
+  color: #1a1405;
+}
+
+#btn_proxima {
+  width: 100%;
+}
+
+/* mensagem de aviso (escolha uma resposta) */
+.mensagem {
+  margin-bottom: 16px;
+  padding: 12px 16px;
+  border: 1px solid;
+  border-radius: 6px;
+  font-size: 15px;
+}
+
+.mensagem.erro {
+  color: #f1a7a0;
+  background: rgba(200, 70, 60, 0.1);
+  border-color: rgba(200, 70, 60, 0.45);
+}
+
+.mensagem:empty {
+  display: none;
+}
+
+/* RESULTADO */
+.resultado {
+  text-align: center;
+}
+
+.emoji {
+  font-size: 64px;
+  line-height: 1.2;
+}
+
+.subtitulo {
+  margin-top: 8px;
+  color: var(--texto-suave);
+}
+
+.pontos {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 56px;
+  font-weight: 700;
+  color: var(--dourado);
+}
+
+.resultado h1 {
+  margin: 8px 0 12px;
+}
+
+.frase {
+  margin-bottom: 32px;
+  color: var(--texto-suave);
+  font-size: 18px;
+}
+
+.resultado .botoes {
+  justify-content: center;
+}

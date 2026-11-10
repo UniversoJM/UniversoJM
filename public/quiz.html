@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Quiz | Universo J&M</title>
+
+  <link rel="stylesheet" href="./css/quiz.css">
+</head>
+
+<body>
+
+  <header class="topo">
+    <a href="index.html#home" class="logo"><img src="./assets/icon/logoJM.png" alt="" class="logo-img"><span>Universo J&M</span></a>
+    <nav class="menu">
+      <a href="index.html#home">Home</a>
+      <a href="index.html#historia">História</a>
+      <a href="index.html#discografia">Discografia</a>
+      <a href="quiz.html">Quiz</a>
+      <a href="resultados.html">Resultados</a>
+      <a href="login.html" id="link-conta">Entrar</a>
+      <button type="button" id="btn-sair" class="botao-sair escondido" onclick="sair()">Sair</button>
+    </nav>
+  </header>
+
+  <main class="quiz">
+    <section class="caixa-quiz">
+
+      <div id="div_quiz">
+        <p id="p_contador" class="contador"></p>
+        <div class="barra">
+          <div id="div_progresso" class="progresso"></div>
+        </div>
+
+        <h1 id="h1_pergunta"></h1>
+        <p id="p_trecho" class="trecho"></p>
+
+        <div id="div_opcoes" class="opcoes"></div>
+
+        <div id="div_msg" class="mensagem erro"></div>
+
+        <button id="btn_proxima" class="botao botao-dourado" onclick="proxima()">Próxima</button>
+      </div>
+
+      <div id="div_resultado" class="resultado escondido">
+        <div id="div_emoji" class="emoji"></div>
+        <p class="subtitulo">Sua pontuação</p>
+        <div id="div_pontos" class="pontos"></div>
+        <h1 id="h1_titulo"></h1>
+        <p id="p_frase" class="frase"></p>
+
+        <div class="botoes">
+          <button class="botao botao-dourado" onclick="refazer()">Refazer o quiz</button>
+          <a href="index.html" class="botao botao-borda">Voltar para a home</a>
+        </div>
+      </div>
+
+    </section>
+  </main>
+
+  <footer class="rodape">
+    <p>J&M - Uma História que Virou Música. Projeto feito por João Pedro Sakamoto Murata Hashimoto.</p>
+  </footer>
+
+  <script src="./js/conta.js"></script>
+  <script>
+    // cada pergunta tem o texto, um trecho opcional e as 4 opções com seus pontos
+    let perguntas = [
+      {
+        texto: "Você conhece Jorge & Mateus?",
+        trecho: "",
+        opcoes: [
+          { texto: "Sou fã", pontos: 3 },
+          { texto: "Conheço algumas músicas", pontos: 2 },
+          { texto: "Já ouvi falar", pontos: 1 },
+          { texto: "Não conheço muito", pontos: 0 }
+        ]
+      },
+      {
+        texto: "Em qual gênero musical Jorge & Mateus são conhecidos?",
+        trecho: "",
+        opcoes: [
+          { texto: "Pagode", pontos: 0 },
+          { texto: "Forró", pontos: 0 },
+          { texto: "Pop rock", pontos: 0 },
+          { texto: "Sertanejo", pontos: 2 }
+        ]
+      },
+      {
+        texto: "Qual característica é mais associada às músicas de Jorge & Mateus?",
+        trecho: "",
+        opcoes: [
+          { texto: "Música eletrônica", pontos: 0 },
+          { texto: "Letras românticas e sertanejo", pontos: 2 },
+          { texto: "Rap e hip-hop", pontos: 0 },
+          { texto: "Rock alternativo", pontos: 0 }
+        ]
+      },
+      {
+        texto: "Qual destas músicas pertence à dupla?",
+        trecho: "",
+        opcoes: [
+          { texto: "É o Amor", pontos: 0 },
+          { texto: "Garota de Ipanema", pontos: 0 },
+          { texto: "Amo Noite e Dia", pontos: 2 },
+          { texto: "Evidências", pontos: 0 }
+        ]
+      },
+      {
+        texto: "Qual destes é um álbum da dupla Jorge & Mateus?",
+        trecho: "",
+        opcoes: [
+          { texto: "O Mundo é Tão Pequeno", pontos: 2 },
+          { texto: "Buteco do Gusttavo Lima", pontos: 0 },
+          { texto: "Evidências", pontos: 0 },
+          { texto: "Ao Vivo em Barretos", pontos: 0 }
+        ]
+      },
+      {
+        texto: "Complete a letra – Sosseguei",
+        trecho: "“Eu sosseguei...”",
+        opcoes: [
+          { texto: "Cansei de procurar alguém que pudesse me fazer feliz por inteiro", pontos: 0 },
+          { texto: "Ontem foi a despedida na balada dessa vida de solteiro", pontos: 2 },
+          { texto: "Deixei para trás todas as noites e aventuras desse mundo inteiro", pontos: 0 },
+          { texto: "Hoje eu acordei pensando em você e no nosso amor verdadeiro", pontos: 0 }
+        ]
+      },
+      {
+        texto: "Você consegue reconhecer uma música de Jorge & Mateus apenas pelos primeiros segundos?",
+        trecho: "",
+        opcoes: [
+          { texto: "Sim, facilmente", pontos: 3 },
+          { texto: "Na maioria das vezes", pontos: 2 },
+          { texto: "Às vezes", pontos: 1 },
+          { texto: "Não conseguiria", pontos: 0 }
+        ]
+      },
+      {
+        texto: "Você já foi a um show da dupla?",
+        trecho: "",
+        opcoes: [
+          { texto: "Sim, várias vezes", pontos: 3 },
+          { texto: "Sim, uma vez", pontos: 2 },
+          { texto: "Ainda não, mas gostaria", pontos: 1 },
+          { texto: "Não tenho interesse", pontos: 0 }
+        ]
+      },
+      {
+        texto: "Você já associou alguma música da dupla a uma pessoa ou momento especial da sua vida?",
+        trecho: "",
+        opcoes: [
+          { texto: "Sim, várias vezes", pontos: 3 },
+          { texto: "Sim, uma vez", pontos: 2 },
+          { texto: "Não, mas já me identifiquei com alguma música", pontos: 1 },
+          { texto: "Nunca", pontos: 0 }
+        ]
+      },
+      {
+        texto: "Você acredita que as músicas de Jorge & Mateus podem aproximar diferentes gerações de uma família?",
+        trecho: "",
+        opcoes: [
+          { texto: "Sim, porque criam memórias compartilhadas através das músicas da dupla", pontos: 3 },
+          { texto: "Sim, porque permitem compartilhar o gosto por Jorge & Mateus", pontos: 2 },
+          { texto: "Talvez, depende da música", pontos: 1 },
+          { texto: "Não acredito", pontos: 0 }
+        ]
+      }
+    ];
+
+    // faixas de resultado: "max" é a maior pontuação que cai naquela faixa
+    let faixas = [
+      { max: 6, emoji: "🎧", titulo: "Novato do Sertanejo", frase: "Está começando a conhecer o universo da dupla!" },
+      { max: 12, emoji: "🎵", titulo: "Admirador J&M", frase: "Já conhece alguns sucessos e está entrando no clima!" },
+      { max: 19, emoji: "❤️", titulo: "Coração J&M", frase: "A dupla já conquistou um espaço especial na sua história!" },
+      { max: 25, emoji: "🏆", titulo: "Lenda J&M", frase: "Você é um verdadeiro especialista no universo Jorge & Mateus!" }
+    ];
+
+    let letras = ["A", "B", "C", "D"];
+    let atual = 0;
+    let pontuacao = 0;
+    let escolhida = -1; // -1 = nenhuma opção escolhida ainda
+
+    function mostrarPergunta() {
+      let pergunta = perguntas[atual];
+
+      p_contador.innerHTML = `Pergunta ${atual + 1} de ${perguntas.length}`;
+      div_progresso.style.width = `${((atual + 1) / perguntas.length) * 100}%`;
+      h1_pergunta.innerHTML = pergunta.texto;
+      p_trecho.innerHTML = pergunta.trecho;
+      div_msg.innerHTML = "";
+
+      let opcoes = "";
+      for (let i = 0; i < pergunta.opcoes.length; i++) {
+        opcoes += `
+          <button type="button" class="opcao" onclick="escolher(${i})">
+            <span class="letra">${letras[i]}</span>
+            ${pergunta.opcoes[i].texto}
+          </button>`;
+      }
+      div_opcoes.innerHTML = opcoes;
+
+      if (atual == perguntas.length - 1) {
+        btn_proxima.innerHTML = "Ver resultado";
+      } else {
+        btn_proxima.innerHTML = "Próxima";
+      }
+    }
+
+    function escolher(i) {
+      escolhida = i;
+      div_msg.innerHTML = "";
+
+      let botoes = document.querySelectorAll(".opcao");
+      for (let j = 0; j < botoes.length; j++) {
+        botoes[j].classList.remove("selecionada");
+      }
+      botoes[i].classList.add("selecionada");
+    }
+
+    function proxima() {
+      if (escolhida == -1) {
+        div_msg.innerHTML = "Escolha uma resposta para continuar.";
+      } else {
+        pontuacao += perguntas[atual].opcoes[escolhida].pontos;
+        atual++;
+        escolhida = -1;
+
+        if (atual < perguntas.length) {
+          mostrarPergunta();
+        } else {
+          mostrarResultado();
+        }
+      }
+    }
+
+    function mostrarResultado() {
+      // procura a primeira faixa onde a pontuação cabe
+      let faixa = faixas[faixas.length - 1];
+      for (let i = faixas.length - 1; i >= 0; i--) {
+        if (pontuacao <= faixas[i].max) {
+          faixa = faixas[i];
+        }
+      }
+
+      div_emoji.innerHTML = faixa.emoji;
+      div_pontos.innerHTML = `${pontuacao} de 25`;
+      h1_titulo.innerHTML = faixa.titulo;
+      p_frase.innerHTML = faixa.frase;
+
+      div_quiz.classList.add("escondido");
+      div_resultado.classList.remove("escondido");
+    }
+
+    function refazer() {
+      atual = 0;
+      pontuacao = 0;
+      escolhida = -1;
+
+      div_resultado.classList.add("escondido");
+      div_quiz.classList.remove("escondido");
+      mostrarPergunta();
+    }
+
+    mostrarPergunta();
+  </script>
+</body>
+
+</html>
