@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Resultados | Universo J&M</title>
+
+  <link rel="stylesheet" href="./css/resultados.css">
+</head>
+
+<body>
+
+  <header class="topo">
+    <a href="index.html#home" class="logo"><img src="./assets/icon/logoJM.png" alt="" class="logo-img"><span>Universo J&M</span></a>
+    <nav class="menu">
+      <a href="index.html#home">Home</a>
+      <a href="index.html#historia">História</a>
+      <a href="index.html#discografia">Discografia</a>
+      <a href="quiz.html">Quiz</a>
+      <a href="resultados.html">Resultados</a>
+      <a href="login.html" id="link-conta">Entrar</a>
+      <button type="button" id="btn-sair" class="botao-sair escondido" onclick="sair()">Sair</button>
+    </nav>
+  </header>
+
+  <main class="resultados">
+    <div class="painel">
+
+      <div class="painel-topo">
+        <h1>Quiz Universo Jorge &amp; Mateus</h1>
+      </div>
+
+      <section class="indicadores">
+        <div class="cartao destaque">
+          <p class="cartao-rotulo">Participantes</p>
+          <p class="cartao-valor" id="kpi_participantes"></p>
+          <p class="cartao-nota">pessoas que terminaram o quiz</p>
+        </div>
+
+        <div class="cartao">
+          <p class="cartao-rotulo">Nível mais comum</p>
+          <p class="cartao-valor texto" id="kpi_nivel"></p>
+          <p class="cartao-nota" id="kpi_nivel_pct"></p>
+        </div>
+      </section>
+
+      <section class="graficos">
+        <div class="cartao">
+          <h3>Quem são os participantes</h3>
+          <p class="cartao-sub">Distribuição por nível</p>
+          <div id="div_niveis"></div>
+        </div>
+
+        <div class="cartao">
+          <h3>Onde a galera se concentra</h3>
+          <p class="cartao-sub">Número de pessoas por pontuação (0 a 25)</p>
+          <div id="div_pontuacao" class="pontuacao"></div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <footer class="rodape">
+    <p>J&M - Uma História que Virou Música. Projeto feito por João Pedro Sakamoto Murata Hashimoto.</p>
+  </footer>
