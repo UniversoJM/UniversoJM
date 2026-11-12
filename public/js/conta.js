@@ -7,7 +7,7 @@ function atualizarMenu() {
 
 function sair() {
     sessionStorage.clear();
-    window.location = "index.html";
+    window.location = "/index.html";
 }
 
 atualizarMenu();

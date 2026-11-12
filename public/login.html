@@ -18,7 +18,7 @@
       <a href="index.html#historia">História</a>
       <a href="index.html#discografia">Discografia</a>
       <a href="quiz.html">Quiz</a>
-      <a href="resultados.html">Resultados</a>
+      <a href="dashboard/dashboard.html">Resultados</a>
       <a href="login.html" id="link-conta">Entrar</a>
       <button type="button" id="btn-sair" class="botao-sair escondido" onclick="sair()">Sair</button>
     </nav>
@@ -98,27 +98,39 @@
       div_msgCerto.innerHTML = "";
     } else {
 
-      let loginValido = false;
+      // manda e-mail e senha para a API, que consulta o banco de dados
+      fetch("/usuarios/autenticar", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ emailServer: email, senhaServer: senha })
+      })
+        .then(function (resposta) {
+          if (resposta.ok) {
+            resposta.json().then(function (json) {
+              div_msg.innerHTML = "";
 
-      if (loginValido) {
-        div_msg.innerHTML = "";
+              // guarda a sessão para o menu mostrar o "Sair"
+              sessionStorage.ID_USUARIO = json.id;
+              sessionStorage.EMAIL_USUARIO = json.email;
+              sessionStorage.NOME_USUARIO = json.nome;
 
-        // guarda a sessão para o menu mostrar o "Sair"
-        sessionStorage.EMAIL_USUARIO = email;
-        sessionStorage.NOME_USUARIO = email;
+              window.location = "index.html";
+            });
+          } else {
+            tentativas--;
+            div_msgCerto.innerHTML = "";
 
-        window.location = "index.html";
-
-      } else {
-        tentativas--;
-        div_msgCerto.innerHTML = "";
-
-        if (tentativas > 0) {
-          div_msg.innerHTML = `Login incorreto, tente novamente (Restam ${tentativas} tentativas)`;
-        } else {
-          div_msg.innerHTML = "Bloqueado temporariamente por excesso de tentativas";
-        }
-      }
+            if (tentativas > 0) {
+              div_msg.innerHTML = `Login incorreto, tente novamente (Restam ${tentativas} tentativas)`;
+            } else {
+              div_msg.innerHTML = "Bloqueado temporariamente por excesso de tentativas";
+            }
+          }
+        })
+        .catch(function (erro) {
+          console.log(erro);
+          div_msg.innerHTML = "Não foi possível conectar ao servidor. Tente novamente.";
+        });
     }
   }
 
