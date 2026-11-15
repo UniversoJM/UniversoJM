@@ -162,11 +162,24 @@
 
   </main>
 
+  <!-- Card que abre ao clicar num álbum da discografia -->
+  <div class="fundo-album" id="fundo_album">
+    <div class="card-album">
+      <button class="fechar-album" id="btn_fechar_album">×</button>
+      <img id="album_capa" src="" alt="">
+      <div>
+        <h3 id="album_titulo"></h3>
+        <p class="ano" id="album_ano"></p>
+        <ol id="album_faixas"></ol>
+      </div>
+    </div>
+  </div>
+
   <footer class="rodape-site">
     <div class="rodape-grade">
 
       <div>
-        <a href="/index.html#home" class="rodape-logo">Universo J&amp;M</a>
+        <a href="index.html" class="rodape-logo">Universo J&amp;M</a>
         <p class="rodape-desc">Conheça a história da dupla, explore a discografia e responda o quiz para descobrir quem
           é fã de verdade de Jorge &amp; Mateus. Tudo em um só lugar.</p>
       </div>
@@ -174,40 +187,21 @@
       <div>
         <h4>Navegação</h4>
         <ul>
-          <li><a href="/index.html#home">Home</a></li>
-          <li><a href="/index.html#historia">História</a></li>
-          <li><a href="/index.html#discografia">Discografia</a></li>
-          <li><a href="/quiz.html">Quiz</a></li>
-          <li><a href="/dashboard/dashboard.html">Resultados</a></li>
+          <li><a href="index.html#home">Home</a></li>
+          <li><a href="index.html#historia">História</a></li>
+          <li><a href="index.html#discografia">Discografia</a></li>
+          <li><a href="quiz.html">Quiz</a></li>
+          <li><a href="dashboard/dashboard.html">Resultados</a></li>
         </ul>
       </div>
 
       <div>
         <h4>Contato</h4>
         <div class="rodape-redes">
-          <a class="rodape-rede" href="https://www.linkedin.com/in/jo%C3%A3o-pedro-sakamoto-3976013b8/" target="_blank"
-            rel="noopener">
-            <svg viewBox="0 0 24 24">
-              <rect x="3" y="3" width="18" height="18" rx="3" />
-              <path d="M8 11v6M8 7.5v.01M12 17v-6M12 13.5c0-1.5 1-2.5 2.5-2.5S17 12 17 13.5V17" />
-            </svg>
-            LinkedIn
-          </a>
-          <a class="rodape-rede" href="https://www.instagram.com/jhonnysmh/" target="_blank" rel="noopener">
-            <svg viewBox="0 0 24 24">
-              <rect x="3" y="3" width="18" height="18" rx="5" />
-              <circle cx="12" cy="12" r="4" />
-              <path d="M17.5 6.5v.01" />
-            </svg>
-            Instagram
-          </a>
-          <a class="rodape-rede" href="https://www.youtube.com/@jhonnysmh" target="_blank" rel="noopener">
-            <svg viewBox="0 0 24 24">
-              <rect x="2.5" y="5.5" width="19" height="13" rx="4" />
-              <path d="M10 9.5v5l4.5-2.5z" />
-            </svg>
-            YouTube
-          </a>
+          <a class="rodape-rede" href="https://www.linkedin.com/in/jo%C3%A3o-pedro-sakamoto-3976013b8/"
+            target="_blank">LinkedIn</a>
+          <a class="rodape-rede" href="https://www.instagram.com/jhonnysmh/" target="_blank">Instagram</a>
+          <a class="rodape-rede" href="https://www.youtube.com/@jhonnysmh" target="_blank">YouTube</a>
         </div>
       </div>
 
@@ -218,7 +212,101 @@
       <span>Projeto feito por João Pedro Sakamoto Murata Hashimoto</span>
     </div>
   </footer>
+
   <script src="./js/conta.js"></script>
+  <script>
+    // Músicas de cada álbum, na mesma ordem dos cards da discografia
+    let albuns = [
+      {
+        titulo: "Ao Vivo em Goiânia", ano: 2007,
+        faixas: ["Tem Nada a Ver / Te Cuida Coração", "Fogueira", "Amor Não é Jogo De Azar", "Paixão Goiana", "Castigo",
+          "Morena Proibida", "Querendo Te Amar", "De Tanto Te Querer", "Pode Chorar", "Tá Faltando Amor",
+          "Chora Viola / Caminhoneiro / Ladrão de Mulher / O Campeão / A Vaca Já Foi pro Brejo", "Me Leva",
+          "Traz Ela De Volta Pra Mim", "Espinhos na Cama / Avião das Nove", "Te Amo Tanto que Nem Sei",
+          "Meus Desespero", "Goiânia Me Espera", "Do Brasil a Argentina (Tô Indo Te Buscar)", "Cavaco do Pau"]
+      },
+      {
+        titulo: "O Mundo É Tão Pequeno", ano: 2009,
+        faixas: ["Vou Fazer Pirraça", "Espelho", "Um Dia Te Levo Comigo", "Pra Nunca Dizer Adeus (Princesa)", "Voa Beija-Flor",
+          "Mistérios", "Amor Covarde", "Onde Haja Sol", "Saudade", "O Mundo É Tão Pequeno", "Se Eu Pedir Cê Volta?",
+          "Só Eu Sei", "Não Sai Da Minha Vida", "Mania De Te Amar", "Só Falta Você", "Violeiro Feliz"]
+      },
+      {
+        titulo: "Aí Já Era", ano: 2010,
+        faixas: ["Seu Astral", "Amo Noite E Dia", "Chove, Chove", "Tempo Ao Tempo", "Se Eu Chorar", "Esquece O Medo E Vem",
+          "Cilada", "Volta Pra Minha Vida", "Anjo da Guarda", "Mil Anos", "Alguém no Seu Lugar", "Pra Ter o Seu Amor",
+          "Vestígios", "Aí Já Era"]
+      },
+      {
+        titulo: "A Hora É Agora", ano: 2012,
+        faixas: ["A Hora É Agora", "Enquanto Houver Razões", "Flor", "Por Quê?", "Prisão Sem Grades", "O Que É Que Tem?",
+          "Eu Quero Só Você", "Pra Que Entender?", "Eu Quero Ser o Teu Sol", "Passa Esse Modão", "Cartaz", "Diga Sim",
+          "Invasões", "Não Demore a Perceber", "A Gente Nem Ficou", "Onda", "Duas Metades", "Ciclo"]
+      },
+      {
+        titulo: "Live in London", ano: 2013,
+        faixas: ["Amo Noite E Dia", "Flor", "Seu Astral", "Querendo Te Amar", "Pot Pourri: Fogueira / Prisão Sem Grades",
+          "De Tanto Te Querer", "Enquanto Houver Razões", "O Que É Que Tem?", "Um Dia Eu Te Levo Comigo", "Por Quê?",
+          "Aí Já Era", "A Hora É Agora", "Amor Pra Recomeçar", "Se Eu Chorar", "O Mundo É Tão Pequeno",
+          "Pra Ter o Seu Amor", "Duas Metades", "Mil Anos", "Onde Haja Sol", "Eu Quero Só Você"]
+      },
+      {
+        titulo: "10 Anos", ano: 2016,
+        faixas: ["Os Anjos Cantam", "Tem Nada A Ver / Te Cuida Coração", "Seu Astral", "Espelho", "O Que É Que Tem?",
+          "De Tanto Te Querer", "Amo Noite E Dia", "Maneira Errada", "Pode Chorar / Voa Beija-Flor / Flor",
+          "Te Amo Tanto que Nem Sei", "O Mundo É Tão Pequeno", "Onde Haja Sol", "Por Quê?", "Idas e Voltas",
+          "Se Eu Pedir Cê Volta?", "Se Disser Bye Bye", "Mil Anos", "Calma", "O Que Eu Tava Falando",
+          "Enquanto Houver Razões", "Aí Já Era", "Duas Metades", "Nocaute", "Logo Eu", "Coisas de Quem Ama",
+          "Querendo Te Amar", "Traz Ela de Volta Pra Mim", "Sosseguei", "Pergunta Boba (Com Maestro Pinocchio)",
+          "A Hora É Agora"]
+      }
+    ];
+
+    let cards = document.querySelectorAll("#discografia .musica");
+
+    for (let i = 0; i < cards.length; i++) {
+      cards[i].onclick = function () {
+        abrirAlbum(i);
+      };
+    }
+
+    function abrirAlbum(i) {
+      let album = albuns[i];
+      let lista = "";
+
+      for (let j = 0; j < album.faixas.length; j++) {
+        lista += "<li>" + album.faixas[j] + "</li>";
+      }
+
+      album_titulo.innerHTML = album.titulo;
+      album_ano.innerHTML = album.ano + " · " + album.faixas.length + " músicas"; album_faixas.innerHTML = lista;
+      album_faixas.scrollTop = 0;
+      album_capa.src = cards[i].querySelector("img").src;
+      album_capa.alt = album.titulo;
+
+      fundo_album.classList.add("aberto");
+    }
+
+    function fecharAlbum() {
+      fundo_album.classList.remove("aberto");
+    }
+
+    btn_fechar_album.onclick = fecharAlbum;
+
+    // clicar fora do card também fecha
+    fundo_album.onclick = function (evento) {
+      if (evento.target == fundo_album) {
+        fecharAlbum();
+      }
+    };
+
+    // tecla Esc também fecha
+    document.onkeydown = function (evento) {
+      if (evento.key == "Escape") {
+        fecharAlbum();
+      }
+    };
+  </script>
 </body>
 
 </html>
