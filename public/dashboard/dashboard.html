@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Dashboard | Universo J&M</title>
 
-  <link rel="stylesheet" href="../css/resultados.css">
+  <link rel="stylesheet" href="../css/dashboards.css">
 </head>
 
 <body>
@@ -29,7 +29,7 @@
 
       <div class="painel-topo">
         <h1>Quiz Universo Jorge &amp; Mateus</h1>
-        <p class="cartao-sub">Olá, <span id="b_usuario"></span>!</p>
+        <p class="cartao-sub">Olá, <span id="b_usuario"></span>!<span id="s_atualizado"></span></p>
       </div>
 
       <section class="indicadores">
@@ -44,19 +44,26 @@
           <p class="cartao-valor texto" id="kpi_nivel"></p>
           <p class="cartao-nota" id="kpi_nivel_pct"></p>
         </div>
+
+        <div class="cartao">
+          <p class="cartao-rotulo">Sua melhor pontuação</p>
+          <p class="cartao-valor" id="kpi_minha"></p>
+          <p class="cartao-nota" id="kpi_minha_nivel"></p>
+        </div>
       </section>
 
       <section class="graficos">
         <div class="cartao">
           <h3>Quem são os participantes</h3>
           <p class="cartao-sub">Distribuição por nível</p>
-          <div id="div_niveis"></div>
+          <div id="div_rosca" class="rosca"></div>
         </div>
 
         <div class="cartao">
-          <h3>Onde a galera se concentra</h3>
-          <p class="cartao-sub">Número de pessoas por pontuação (0 a 25)</p>
-          <div id="div_pontuacao" class="pontuacao"></div>
+          <h3>Quem se diz fã sabe mais?</h3>
+          <p class="cartao-sub">Acerto médio nas 5 perguntas de conhecimento, por resposta à 1ª pergunta</p>
+          <div id="div_fa"></div>
+          <p class="cartao-nota fa-nota" id="p_fa_nota"></p>
         </div>
       </section>
 
@@ -74,6 +81,223 @@
       window.location = "../login.html";
     } else {
       b_usuario.innerHTML = sessionStorage.NOME_USUARIO;
+      carregarDados();
+
+      // tempo real: busca os números de novo a cada 5 segundos (não precisa apertar F5)
+      setInterval(function () {
+        if (document.hidden == false) {
+          carregarDados();
+        }
+      }, 5000);
+    }
+
+    let jaCarregou = false; // vira true depois da primeira resposta da API
+
+    // os 4 níveis do quiz, na ordem, com a cor de cada fatia
+    let niveis = [
+      { nome: "Novato do Sertanejo", cor: "#8a6d2b" },
+      { nome: "Admirador J&M", cor: "#b08a35" },
+      { nome: "Coração J&M", cor: "#c9a24b" },
+      { nome: "Lenda J&M", cor: "#e3c97a" }
+    ];
+
+    // as 4 respostas da 1ª pergunta do quiz ("Você conhece Jorge & Mateus?"), da que menos pontua para a que mais pontua
+    let grupos = [
+      { nome: "Não conheço muito", cor: "#8a6d2b" },
+      { nome: "Já ouvi falar", cor: "#b08a35" },
+      { nome: "Conheço algumas músicas", cor: "#c9a24b" },
+      { nome: "Sou fã", cor: "#e3c97a" }
+    ];
+
+    // busca os números na API (que consulta o banco) e desenha na tela
+    function carregarDados() {
+      let idUsuario = sessionStorage.ID_USUARIO;
+      if (idUsuario == null) {
+        idUsuario = 0;
+      }
+
+      fetch(`/resultados/dados/${idUsuario}`, { cache: "no-store" })
+        .then(function (resposta) {
+          if (resposta.ok) {
+            resposta.json().then(function (dados) {
+              console.log(dados);
+              jaCarregou = true;
+              mostrarIndicadores(dados);
+              desenharRosca(dados);
+              desenharGrupos(dados);
+
+              s_atualizado.innerHTML = ` · atualizado às ${new Date().toLocaleTimeString("pt-BR")}`;
+            });
+          } else {
+            erroNaTela("Não foi possível carregar os dados.");
+          }
+        })
+        .catch(function (erro) {
+          console.error("Erro ao buscar os resultados: " + erro.message);
+          erroNaTela("Não foi possível conectar ao servidor.");
+        });
+    }
+
+    function erroNaTela(mensagem) {
+      // se já tinha números na tela, mantém eles até a próxima tentativa
+      if (jaCarregou) {
+        return;
+      }
+
+      kpi_participantes.innerHTML = "-";
+      kpi_nivel.innerHTML = "-";
+      kpi_nivel_pct.innerHTML = mensagem;
+      kpi_minha.innerHTML = "-";
+    }
+
+    // devolve quantas pessoas estão num nível (0 se ninguém)
+    function qtdDoNivel(dados, nome) {
+      for (let i = 0; i < dados.niveis.length; i++) {
+        if (dados.niveis[i].nivel == nome) {
+          return dados.niveis[i].qtd;
+        }
+      }
+      return 0;
+    }
+
+    function textoPessoas(qtd) {
+      return (qtd == 1) ? "1 pessoa" : `${qtd} pessoas`;
+    }
+
+    function mostrarIndicadores(dados) {
+      kpi_participantes.innerHTML = dados.participantes;
+
+      // nível mais comum
+      if (dados.participantes == 0) {
+        kpi_nivel.innerHTML = "-";
+        kpi_nivel_pct.innerHTML = "ainda não há resultados";
+      } else {
+        let maisComum = niveis[0].nome;
+        let maiorQtd = 0;
+
+        for (let i = 0; i < niveis.length; i++) {
+          let qtd = qtdDoNivel(dados, niveis[i].nome);
+          if (qtd > maiorQtd) {
+            maiorQtd = qtd;
+            maisComum = niveis[i].nome;
+          }
+        }
+
+        kpi_nivel.innerHTML = maisComum;
+        kpi_nivel_pct.innerHTML = `${Math.round(maiorQtd / dados.participantes * 100)}% dos participantes`;
+      }
+
+      // melhor pontuação de quem está logado
+      if (dados.melhor == null) {
+        kpi_minha.innerHTML = "-";
+        kpi_minha_nivel.innerHTML = "faça o quiz para aparecer aqui";
+      } else {
+        kpi_minha.innerHTML = dados.melhor.pontuacao;
+        kpi_minha_nivel.innerHTML = `de 25 · ${dados.melhor.nivel}`;
+      }
+    }
+
+    // gráfico "Quem são os participantes": rosca com uma fatia por nível
+    function desenharRosca(dados) {
+      let raio = 70;
+      let circunferencia = 2 * Math.PI * raio;
+
+      // total de pessoas e quantos níveis têm alguém (para saber se precisa de espaço entre as fatias)
+      let total = 0;
+      let niveisComGente = 0;
+      for (let i = 0; i < niveis.length; i++) {
+        let qtd = qtdDoNivel(dados, niveis[i].nome);
+        total += qtd;
+        if (qtd > 0) {
+          niveisComGente++;
+        }
+      }
+
+      let fatias = "";
+      let legenda = "";
+      let acumulado = 0;
+
+      for (let i = 0; i < niveis.length; i++) {
+        let qtd = qtdDoNivel(dados, niveis[i].nome);
+        let pct = 0;
+        if (total > 0) {
+          pct = Math.round(qtd / total * 100);
+        }
+
+        if (qtd > 0) {
+          let tamanho = qtd / total * circunferencia;
+          let folga = (niveisComGente > 1) ? 2 : 0;
+          let visivel = tamanho - folga;
+
+          fatias += `
+            <circle class="rosca-fatia" cx="90" cy="90" r="${raio}" fill="none" stroke="${niveis[i].cor}" stroke-width="26"
+              stroke-dasharray="${visivel} ${circunferencia - visivel}" stroke-dashoffset="${-acumulado}" transform="rotate(-90 90 90)">
+              <title>${niveis[i].nome}: ${textoPessoas(qtd)} (${pct}%)</title>
+            </circle>`;
+
+          acumulado += tamanho;
+        }
+
+        legenda += `
+          <div class="rosca-item">
+            <span class="rosca-cor" style="background: ${niveis[i].cor};"></span>
+            <span>${niveis[i].nome}<p class="cartao-nota">${pct}% · ${textoPessoas(qtd)}</p></span>
+          </div>`;
+      }
+
+      div_rosca.innerHTML = `
+        <svg viewBox="0 0 180 180" role="img" aria-label="Distribuição dos participantes por nível">
+          <circle cx="90" cy="90" r="${raio}" fill="none" stroke="#2a2620" stroke-width="26"></circle>
+          ${fatias}
+          <text class="rosca-numero" x="90" y="92" text-anchor="middle">${total}</text>
+          <text class="rosca-rotulo" x="90" y="112" text-anchor="middle">${(total == 1) ? "participante" : "participantes"}</text>
+        </svg>
+        <div class="rosca-legenda">${legenda}</div>`;
+    }
+
+    // gráfico "Quem se diz fã sabe mais?": uma coluna por resposta da 1ª pergunta, com o acerto médio do grupo
+    function desenharGrupos(dados) {
+      let alturaMaxima = 158; // px da coluna que representa 100%
+
+      let colunas = "";
+      let rotulos = "";
+
+      for (let i = 0; i < grupos.length; i++) {
+        let grupo = dados.grupos[i];
+        let altura = 0;
+        let valor = "-";
+        let detalhe = "sem dados";
+
+        if (grupo.acerto != null) {
+          altura = Math.round(grupo.acerto / 100 * alturaMaxima);
+          valor = `${grupo.acerto}%`;
+        }
+        if (grupo.pessoas > 0) {
+          detalhe = textoPessoas(grupo.pessoas);
+        }
+
+        colunas += `
+          <div class="fa-coluna">
+            <span class="fa-valor">${valor}</span>
+            <div class="fa-barra" style="height: ${altura}px; background: ${grupos[i].cor};"
+              title="${grupos[i].nome}: ${valor} de acerto (${detalhe})"></div>
+          </div>`;
+
+        rotulos += `<div>${grupos[i].nome}<p class="cartao-nota">${detalhe}</p></div>`;
+      }
+
+      // linha tracejada com o acerto médio de todo mundo
+      let linha = "";
+      if (dados.acertoGeral != null) {
+        linha = `<div class="fa-media" style="bottom: ${Math.round(dados.acertoGeral / 100 * alturaMaxima)}px;"></div>`;
+        p_fa_nota.innerHTML = `Linha tracejada: acerto médio de todos (${dados.acertoGeral}%).`;
+      } else {
+        p_fa_nota.innerHTML = "Ainda não há respostas para mostrar.";
+      }
+
+      div_fa.innerHTML = `
+        <div class="fa">${linha}${colunas}</div>
+        <div class="fa-rotulos">${rotulos}</div>`;
     }
   </script>
 </body>
