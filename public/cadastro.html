@@ -39,19 +39,19 @@
         <h1>Crie a sua conta</h1>
         <p class="subtitulo">Preencha os dados abaixo para se cadastrar.</p>
 
-        <div class="campo">
+        <div class="campo com-aviso">
           <label for="ipt_nome">Nome</label>
           <input id="ipt_nome" type="text" placeholder="Seu nome">
           <div id="div_nomeInvalido" class="aviso"></div>
         </div>
 
-        <div class="campo">
+        <div class="campo com-aviso">
           <label for="ipt_email">E-mail</label>
           <input id="ipt_email" type="email" placeholder="email">
           <div id="div_emailInvalido" class="aviso"></div>
         </div>
 
-        <div class="campo">
+        <div class="campo com-aviso">
           <label for="ipt_senha">Senha</label>
           <div class="campo-senha">
             <input id="ipt_senha" type="password" placeholder="Sua senha">
@@ -61,7 +61,7 @@
           <div id="div_fraca" class="aviso"></div>
         </div>
 
-        <div class="campo">
+        <div class="campo com-aviso">
           <label for="ipt_confirmarSenha">Confirmar senha</label>
           <div class="campo-senha">
             <input id="ipt_confirmarSenha" type="password" placeholder="Repita a senha">
@@ -117,12 +117,28 @@
     // vetor com os domínios de email permitidos
     let dominios = ["@gmail.com", "@hotmail.com", "@outlook.com", "@sptech.school"];
 
-    // nome
-    if (nome.length >= 2) {
+    // nome: só letras (pode ter espaço) e no mínimo 2 letras
+    let nomeCerto = true;
+    let qtdLetras = 0;
+
+    for (let i = 0; i < nome.length; i++) {
+      let caractere = nome[i];
+
+      if (caractere != " ") {
+        // se maiúscula e minúscula são iguais, não é letra
+        if (caractere.toLowerCase() == caractere.toUpperCase()) {
+          nomeCerto = false;
+        } else {
+          qtdLetras++;
+        }
+      }
+    }
+
+    if (nomeCerto && qtdLetras >= 2) {
       nomeInvalido = false;
       div_nomeInvalido.innerHTML = "";
     } else {
-      div_nomeInvalido.innerHTML = "Digite seu nome.";
+      div_nomeInvalido.innerHTML = "Nome inválido.";
     }
 
     // email: sem espaços, só um @ e domínio permitido
@@ -137,7 +153,7 @@
       emailInvalido = false;
       div_emailInvalido.innerHTML = "";
     } else {
-      div_emailInvalido.innerHTML = "Digite um email válido (gmail, hotmail, outlook ou sptech.school).";
+      div_emailInvalido.innerHTML = "E-mail inválido.";
     }
 
     // senha: percorre cada caractere e marca o que ela tem
@@ -151,11 +167,11 @@
     }
 
     if (temMaius && temMinus && temNum && temSimb && senha.length >= 8 && senha.length <= 45) {
-      div_forte.innerHTML = "Senha forte";
+      div_forte.innerHTML = "";
       div_fraca.innerHTML = "";
       senhaInvalida = false;
     } else {
-      div_fraca.innerHTML = "Senha fraca: use de 8 a 45 caracteres, com maiúscula, minúscula, número e símbolo (! @ # $ % & * _ - . /).";
+      div_fraca.innerHTML = "Senha inválida.";
       div_forte.innerHTML = "";
     }
 
@@ -164,11 +180,11 @@
       cfmSenhaInvalido = false;
       div_senhaDif.innerHTML = "";
     } else {
-      div_senhaDif.innerHTML = "As senhas são diferentes.";
+      div_senhaDif.innerHTML = "Senha Diferente.";
     }
 
     if (nomeInvalido || emailInvalido || senhaInvalida || cfmSenhaInvalido) {
-      div_msg.innerHTML = "Preencha os dados corretamente.";
+      div_msg.innerHTML = "Dados inválidos.";
       div_msgCerto.innerHTML = "";
     } else {
       div_msg.innerHTML = "";
@@ -181,19 +197,19 @@
       })
         .then(function (resposta) {
           if (resposta.ok) {
-            div_msgCerto.innerHTML = "Cadastro realizado! Redirecionando para o login...";
+            div_msgCerto.innerHTML = "Cadastro feito! Indo para o login...";
             setTimeout(function () {
               window.location = "login.html";
             }, 1500);
           } else {
             resposta.json().then(function (erro) {
-              div_msg.innerHTML = (resposta.status == 409) ? erro : "Erro ao cadastrar. Tente novamente.";
+              div_msg.innerHTML = (resposta.status == 409) ? erro : "Erro ao cadastrar.";
             });
           }
         })
         .catch(function (erro) {
           console.log(erro);
-          div_msg.innerHTML = "Não foi possível conectar ao servidor. Tente novamente.";
+          div_msg.innerHTML = "Erro de conexão com o servidor.";
         });
     }
   }

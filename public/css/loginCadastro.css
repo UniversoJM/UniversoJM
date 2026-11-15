@@ -206,7 +206,19 @@ button:focus-visible {
 
 /* CAMPOS DO FORMULÁRIO */
 .campo {
+  position: relative;
   margin-bottom: 1.1rem;
+}
+
+/* Campos do cadastro que têm um aviso embaixo: o aviso aparece em cima do espaço
+   que já está reservado aqui, então a caixa não cresce quando ele aparece */
+.campo.com-aviso {
+  margin-bottom: 1.9rem;
+}
+
+/* campo da senha: o aviso dele ocupa até 2 linhas */
+.campo.com-aviso.aviso-longo {
+  margin-bottom: 3.2rem;
 }
 
 .campo label {
@@ -272,32 +284,31 @@ button:focus-visible {
   margin-top: 0.6rem;
 }
 
-/* Caixa de mensagem geral (erro ou sucesso) */
+/* Mensagem geral (erro ou sucesso): só o texto, sem caixa.
+   O espaço de 1 linha fica sempre reservado, para a caixa não crescer quando a mensagem aparece */
 .mensagem {
   margin-top: 1rem;
-  padding: 0.75rem 1rem;
-  border: 1px solid;
-  border-radius: 6px;
-  font-size: 0.92rem;
+  min-height: 1.5rem;
+  font-size: 0.9rem;
+  text-align: center;
 }
 
 .mensagem.erro {
   color: #f1a7a0;
-  background: rgba(200, 70, 60, 0.1);
-  border-color: rgba(200, 70, 60, 0.45);
 }
 
+/* a de sucesso aparece no mesmo lugar da de erro, sem ocupar espaço a mais */
 .mensagem.sucesso {
+  margin-top: -1.5rem;
   color: #a9d9a5;
-  background: rgba(90, 170, 90, 0.1);
-  border-color: rgba(90, 170, 90, 0.45);
 }
 
-/* Se não tem texto dentro, a caixa some */
-.mensagem:empty {
-  display: none;
-}
+/* Aviso embaixo de cada campo do cadastro: fica solto (position: absolute),
+   então aparecer ou sumir não muda a altura da caixa */
 .aviso {
+  position: absolute;
+  left: 0;
+  right: 0;
   margin-top: 0.35rem;
   font-size: 0.82rem;
   color: #f1a7a0;

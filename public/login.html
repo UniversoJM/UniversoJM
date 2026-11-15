@@ -39,17 +39,19 @@
         <h1>Que bom te ver de novo</h1>
         <p class="subtitulo">Entre com o seu e-mail e a sua senha.</p>
 
-        <div class="campo">
+        <div class="campo com-aviso">
           <label for="ipt_email">E-mail</label>
           <input id="ipt_email" type="email" placeholder="email">
+          <div id="div_emailInvalido" class="aviso"></div>
         </div>
 
-        <div class="campo">
+        <div class="campo com-aviso">
           <label for="ipt_senha">Senha</label>
           <div class="campo-senha">
             <input id="ipt_senha" type="password" placeholder="Sua senha">
             <button type="button" class="ver-senha" onclick="verSenha(ipt_senha, this)">Mostrar</button>
           </div>
+          <div id="div_senhaInvalida" class="aviso"></div>
         </div>
 
         <button class="botao botao-dourado" onclick="logar()">Entrar</button>
@@ -77,6 +79,12 @@
     let email = ipt_email.value.trim();
     let senha = ipt_senha.value.trim();
 
+    // limpa os avisos antes de validar de novo
+    div_emailInvalido.innerHTML = "";
+    div_senhaInvalida.innerHTML = "";
+    div_msg.innerHTML = "";
+    div_msgCerto.innerHTML = "";
+
     // vetor com os domínios de email permitidos
     let dominios = ["@gmail.com", "@hotmail.com", "@outlook.com", "@sptech.school"];
 
@@ -87,15 +95,18 @@
       }
     }
 
+    let emailInvalido = (dominioValido == false || email.includes(" ") || email.split("@").length != 2);
+    let senhaInvalida = (senha.length == 0);
+
     if (tentativas < 1) {
-      div_msg.innerHTML = "Bloqueado temporariamente por excesso de tentativas";
-      div_msgCerto.innerHTML = "";
-    } else if (email.length == 0 || senha.length == 0) {
-      div_msg.innerHTML = "Preencha o e-mail e a senha.";
-      div_msgCerto.innerHTML = "";
-    } else if (dominioValido == false || email.includes(" ") || email.split("@").length != 2) {
-      div_msg.innerHTML = "Digite um email válido (gmail, hotmail, outlook ou sptech.school).";
-      div_msgCerto.innerHTML = "";
+      div_msg.innerHTML = "Muitas tentativas. Tente mais tarde.";
+    } else if (emailInvalido || senhaInvalida) {
+      if (emailInvalido) {
+        div_emailInvalido.innerHTML = "E-mail inválido.";
+      }
+      if (senhaInvalida) {
+        div_senhaInvalida.innerHTML = "Senha inválida.";
+      }
     } else {
 
       // manda e-mail e senha para a API, que consulta o banco de dados
@@ -107,8 +118,6 @@
         .then(function (resposta) {
           if (resposta.ok) {
             resposta.json().then(function (json) {
-              div_msg.innerHTML = "";
-
               // guarda a sessão para o menu mostrar o "Sair"
               sessionStorage.ID_USUARIO = json.id;
               sessionStorage.EMAIL_USUARIO = json.email;
@@ -118,18 +127,17 @@
             });
           } else {
             tentativas--;
-            div_msgCerto.innerHTML = "";
 
             if (tentativas > 0) {
-              div_msg.innerHTML = `Login incorreto, tente novamente (Restam ${tentativas} tentativas)`;
+              div_senhaInvalida.innerHTML = `Dados inválidos (restam ${tentativas}).`;
             } else {
-              div_msg.innerHTML = "Bloqueado temporariamente por excesso de tentativas";
+              div_msg.innerHTML = "Muitas tentativas. Tente mais tarde.";
             }
           }
         })
         .catch(function (erro) {
           console.log(erro);
-          div_msg.innerHTML = "Não foi possível conectar ao servidor. Tente novamente.";
+          div_msg.innerHTML = "Erro de conexão com o servidor.";
         });
     }
   }
