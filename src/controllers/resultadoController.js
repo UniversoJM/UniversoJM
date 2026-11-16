@@ -1,6 +1,6 @@
 var resultadoModel = require("../models/resultadoModel");
 
-var niveisValidos = ["Novato do Sertanejo", "Admirador J&M", "Coração J&M", "Lenda J&M"];
+var niveisValidos = ["Novato do Sertanejo", "Ouvinte de Estrada", "Sofredor Profissional", "Lenda J&M"];
 
 // pontos máximos de cada uma das 10 perguntas do quiz, na ordem
 var maximos = [3, 2, 2, 2, 2, 2, 3, 3, 3, 3];
