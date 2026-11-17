@@ -7,6 +7,7 @@
   <title>Dashboard | Universo J&M</title>
 
   <link rel="stylesheet" href="../css/dashboards.css">
+  <link rel="stylesheet" href="../css/rodape.css">
 </head>
 
 <body>
@@ -31,7 +32,7 @@
 
       <div class="painel-topo">
         <h1>Quiz Universo Jorge &amp; Mateus</h1>
-        <p class="cartao-sub">Olá, <span id="b_usuario"></span>!<span id="s_atualizado"></span></p>
+        <p class="cartao-sub">Olá, <span id="b_usuario"></span>!
       </div>
 
       <section class="indicadores">
@@ -52,6 +53,12 @@
           <p class="cartao-valor" id="kpi_minha"></p>
           <p class="cartao-nota" id="kpi_minha_nivel"></p>
         </div>
+
+        <div class="cartao">
+          <p class="cartao-rotulo">Sua posição</p>
+          <p class="cartao-valor" id="kpi_posicao"></p>
+          <p class="cartao-nota" id="kpi_posicao_nota"></p>
+        </div>
       </section>
 
       <section class="graficos">
@@ -62,10 +69,9 @@
         </div>
 
         <div class="cartao">
-          <h3>Quem se diz fã sabe mais?</h3>
-          <p class="cartao-sub">Acerto médio nas 5 perguntas de conhecimento, por resposta à 1ª pergunta</p>
-          <div id="div_fa"></div>
-          <p class="cartao-nota fa-nota" id="p_fa_nota"></p>
+          <h3>Ranking dos fãs</h3>
+          <p class="cartao-sub">As melhores pontuações do quiz</p>
+          <div id="div_ranking"></div>
         </div>
       </section>
 
@@ -76,7 +82,7 @@
     <div class="rodape-grade">
 
       <div>
-        <a href="index.html" class="rodape-logo">Universo J&amp;M</a>
+        <a href="../index.html" class="rodape-logo">Universo J&amp;M</a>
         <p class="rodape-desc">Conheça a história da dupla, explore a discografia e responda o quiz para descobrir quem
           é fã de verdade de Jorge &amp; Mateus. Tudo em um só lugar.</p>
       </div>
@@ -84,12 +90,12 @@
       <div>
         <h4>Navegação</h4>
         <ul>
-          <li><a href="index.html#home">Home</a></li>
+          <li><a href="../index.html#home">Home</a></li>
           <li><a href="../index.html#dupla">A dupla</a></li>
-          <li><a href="index.html#historia">História</a></li>
-          <li><a href="index.html#discografia">Discografia</a></li>
-          <li><a href="quiz.html">Quiz</a></li>
-          <li><a href="dashboard/dashboard.html">Resultados</a></li>
+          <li><a href="../index.html#historia">História</a></li>
+          <li><a href="../index.html#discografia">Discografia</a></li>
+          <li><a href="../quiz.html">Quiz</a></li>
+          <li><a href="dashboard.html">Resultados</a></li>
         </ul>
       </div>
 
@@ -138,14 +144,6 @@
       { nome: "Lenda J&M", cor: "#e3c97a" }
     ];
 
-    // as 4 respostas da 1ª pergunta do quiz ("Você conhece Jorge & Mateus?"), da que menos pontua para a que mais pontua
-    let grupos = [
-      { nome: "Não conheço muito", cor: "#8a6d2b" },
-      { nome: "Já ouvi falar", cor: "#b08a35" },
-      { nome: "Conheço algumas músicas", cor: "#c9a24b" },
-      { nome: "Sou fã", cor: "#e3c97a" }
-    ];
-
     // busca os números na API (que consulta o banco) e desenha na tela
     function carregarDados() {
       let idUsuario = sessionStorage.ID_USUARIO;
@@ -161,7 +159,7 @@
               jaCarregou = true;
               mostrarIndicadores(dados);
               desenharRosca(dados);
-              desenharGrupos(dados);
+              desenharRanking(dados);
 
               s_atualizado.innerHTML = ` · atualizado às ${new Date().toLocaleTimeString("pt-BR")}`;
             });
@@ -185,6 +183,7 @@
       kpi_nivel.innerHTML = "-";
       kpi_nivel_pct.innerHTML = mensagem;
       kpi_minha.innerHTML = "-";
+      kpi_posicao.innerHTML = "-";
     }
 
     // devolve quantas pessoas estão num nível (0 se ninguém)
@@ -231,6 +230,15 @@
       } else {
         kpi_minha.innerHTML = dados.melhor.pontuacao;
         kpi_minha_nivel.innerHTML = `de 25 · ${dados.melhor.nivel}`;
+      }
+
+      // posição de quem está logado no ranking
+      if (dados.eu == null) {
+        kpi_posicao.innerHTML = "-";
+        kpi_posicao_nota.innerHTML = "faça o quiz para aparecer aqui";
+      } else {
+        kpi_posicao.innerHTML = `${dados.eu.posicao}º`;
+        kpi_posicao_nota.innerHTML = (dados.participantes == 1) ? "entre 1 participante" : `entre ${dados.participantes} participantes`;
       }
     }
 
@@ -292,49 +300,43 @@
         <div class="rosca-legenda">${legenda}</div>`;
     }
 
-    // gráfico "Quem se diz fã sabe mais?": uma coluna por resposta da 1ª pergunta, com o acerto médio do grupo
-    function desenharGrupos(dados) {
-      let alturaMaxima = 158; // px da coluna que representa 100%
+    // o nome vem do cadastro, então é "limpo" antes de entrar no HTML
+    function escapar(texto) {
+      return String(texto).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+    }
 
-      let colunas = "";
-      let rotulos = "";
+    // uma linha do ranking (a do usuário logado ganha destaque e o texto "você")
+    function linhaRanking(item) {
+      return `
+        <div class="rk${item.voce ? " eu" : ""}">
+          <span class="rk-pos">${item.posicao}º</span>
+          <span class="rk-nome">${escapar(item.nome)}${item.voce ? "<small>você</small>" : ""}</span>
+          <span class="rk-nivel">${item.nivel}</span>
+          <span class="rk-pts">${item.pontuacao} pts</span>
+        </div>`;
+    }
 
-      for (let i = 0; i < grupos.length; i++) {
-        let grupo = dados.grupos[i];
-        let altura = 0;
-        let valor = "-";
-        let detalhe = "sem dados";
-
-        if (grupo.acerto != null) {
-          altura = Math.round(grupo.acerto / 100 * alturaMaxima);
-          valor = `${grupo.acerto}%`;
-        }
-        if (grupo.pessoas > 0) {
-          detalhe = textoPessoas(grupo.pessoas);
-        }
-
-        colunas += `
-          <div class="fa-coluna">
-            <span class="fa-valor">${valor}</span>
-            <div class="fa-barra" style="height: ${altura}px; background: ${grupos[i].cor};"
-              title="${grupos[i].nome}: ${valor} de acerto (${detalhe})"></div>
-          </div>`;
-
-        rotulos += `<div>${grupos[i].nome}<p class="cartao-nota">${detalhe}</p></div>`;
+    // gráfico "Ranking dos fãs": os 5 melhores e, se o usuário estiver fora do top 5, a posição dele no final
+    function desenharRanking(dados) {
+      if (dados.ranking.length == 0) {
+        div_ranking.innerHTML = `<p class="cartao-nota">Ainda não há resultados para mostrar.</p>`;
+        return;
       }
 
-      // linha tracejada com o acerto médio de todo mundo
-      let linha = "";
-      if (dados.acertoGeral != null) {
-        linha = `<div class="fa-media" style="bottom: ${Math.round(dados.acertoGeral / 100 * alturaMaxima)}px;"></div>`;
-        p_fa_nota.innerHTML = `Linha tracejada: acerto médio de todos (${dados.acertoGeral}%).`;
-      } else {
-        p_fa_nota.innerHTML = "Ainda não há respostas para mostrar.";
+      let linhas = "";
+      for (let i = 0; i < dados.ranking.length; i++) {
+        linhas += linhaRanking(dados.ranking[i]);
       }
 
-      div_fa.innerHTML = `
-        <div class="fa">${linha}${colunas}</div>
-        <div class="fa-rotulos">${rotulos}</div>`;
+      if (dados.eu != null && dados.eu.posicao > dados.ranking.length) {
+        // "···" só aparece quando existem posições escondidas entre o 5º e o usuário
+        if (dados.eu.posicao > dados.ranking.length + 1) {
+          linhas += `<p class="rk-sep">···</p>`;
+        }
+        linhas += linhaRanking(dados.eu);
+      }
+
+      div_ranking.innerHTML = linhas;
     }
   </script>
 </body>

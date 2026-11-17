@@ -128,13 +128,13 @@
         ]
       },
       {
-        texto: "Qual característica é mais associada às músicas de Jorge & Mateus?",
+        texto: "Quais são os nomes verdadeiros de Jorge & Mateus?",
         trecho: "",
         opcoes: [
-          { texto: "Música eletrônica", pontos: 0 },
-          { texto: "Letras românticas e sertanejo", pontos: 2 },
-          { texto: "Rap e hip-hop", pontos: 0 },
-          { texto: "Rock alternativo", pontos: 0 }
+          { texto: "Jorge Ben Jor e Mateus Solano", pontos: 0 },
+          { texto: "Jorge Barcelos e Mateus Liduário", pontos: 2 },
+          { texto: "Jorge Aragão e Matheus Cunha", pontos: 0 },
+          { texto: "Jorge Amado e Mateus Aleluia", pontos: 0 }
         ]
       },
       {
@@ -158,13 +158,13 @@
         ]
       },
       {
-        texto: "Complete a letra – Sosseguei",
-        trecho: "“Eu sosseguei...”",
+        texto: "Complete a letra – Nocaute",
+        trecho: "“O tempo passou, a vida mudou...”",
         opcoes: [
-          { texto: "Cansei de procurar alguém que pudesse me fazer feliz por inteiro", pontos: 0 },
-          { texto: "Ontem foi a despedida na balada dessa vida de solteiro", pontos: 2 },
-          { texto: "Deixei para trás todas as noites e aventuras desse mundo inteiro", pontos: 0 },
-          { texto: "Hoje eu acordei pensando em você e no nosso amor verdadeiro", pontos: 0 }
+          { texto: "Mas eu aprendi a te esquecer, mesmo sem querer deixar de te amar", pontos: 0 },
+          { texto: "Mas eu continuo seu, ainda sou o mesmo bobo apaixonado", pontos: 2 },
+          { texto: "E mesmo seguindo em frente, ainda lembro de tudo que vivemos", pontos: 0 },
+          { texto: "Mas encontrei em outro alguém tudo aquilo que faltava em mim", pontos: 0 }
         ]
       },
       {
@@ -313,7 +313,7 @@
       })
         .then(function (resposta) {
           if (resposta.ok) {
-            p_salvo.innerHTML = 'Pontuação salva! Veja no <a href="dashboard/dashboard.html">dashboard</a>.';
+            p_salvo.innerHTML = 'Pontuação salva! Veja na <a href="dashboard/dashboard.html">dashboard</a>.';
           } else if (resposta.status == 404) {
             p_salvo.innerHTML = 'Sua sessão está desatualizada. Clique em Sair, entre de novo e refaça o quiz.';
           } else {

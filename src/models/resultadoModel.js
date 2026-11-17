@@ -34,13 +34,20 @@ function contarPorNivel() {
     return database.executar(instrucaoSql);
 }
 
-// os pontos de cada pergunta de todos os participantes (os grupos são calculados no controller)
-function buscarRespostas() {
+// a melhor pontuação de cada participante, da maior para a menor (ranking dos fãs)
+// em caso de empate, fica na frente quem fez a pontuação primeiro (menor id)
+function buscarRanking() {
     var instrucaoSql = `
-        SELECT respostas
+        SELECT u.id AS idUsuario, u.nome, r.pontuacao, r.nivel
         FROM resultado_quiz r
-        WHERE respostas IS NOT NULL
-        AND r.id = (SELECT MAX(id) FROM resultado_quiz WHERE fk_usuario = r.fk_usuario);
+        JOIN usuario u ON u.id = r.fk_usuario
+        WHERE r.id = (
+            SELECT r2.id FROM resultado_quiz r2
+            WHERE r2.fk_usuario = r.fk_usuario
+            ORDER BY r2.pontuacao DESC, r2.id DESC
+            LIMIT 1
+        )
+        ORDER BY r.pontuacao DESC, r.id ASC;
     `;
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql);
@@ -62,6 +69,6 @@ module.exports = {
     salvar,
     contarParticipantes,
     contarPorNivel,
-    buscarRespostas,
+    buscarRanking,
     buscarMelhorDoUsuario
 };
