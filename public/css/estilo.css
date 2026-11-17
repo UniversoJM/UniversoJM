@@ -264,6 +264,110 @@ button:focus-visible {
   padding: 80px 5%;
 }
 
+/* QUEM SÃO JORGE E MATEUS */
+.perfil {
+  display: grid;
+  grid-template-columns: 1.05fr 1fr;
+  gap: 56px;
+  align-items: center;
+  margin-bottom: 72px;
+}
+
+.perfil:last-child {
+  margin-bottom: 0;
+}
+
+.perfil.inverso {
+  grid-template-columns: 1fr 1.05fr;
+}
+
+.perfil.inverso .perfil-foto {
+  order: 2;
+}
+
+.perfil-foto {
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  border: 1px solid var(--borda);
+  border-radius: 14px;
+  background: linear-gradient(160deg, #2a2418, #121212);
+  box-shadow: 0 24px 50px rgba(0, 0, 0, 0.45);
+}
+
+.perfil-foto img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+}
+
+.perfil-texto h3 {
+  font-size: 46px;
+  color: var(--dourado-claro);
+  margin-bottom: 6px;
+}
+
+.perfil-real {
+  color: var(--texto-suave);
+  font-size: 13px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  margin-bottom: 24px;
+}
+
+.perfil-desc {
+  color: #d4cfc4;
+  font-size: 17px;
+  line-height: 1.8;
+  margin-bottom: 28px;
+}
+
+.perfil-dados {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border-top: 1px solid var(--borda);
+}
+
+.perfil-dados div {
+  padding-top: 18px;
+}
+
+.perfil-dados div + div {
+  padding-left: 28px;
+  border-left: 1px solid var(--borda);
+}
+
+.perfil-dados span {
+  display: block;
+  color: var(--texto-suave);
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+
+.perfil-dados strong {
+  font-size: 19px;
+  font-weight: 400;
+}
+
+@media (max-width: 800px) {
+  .perfil,
+  .perfil.inverso {
+    grid-template-columns: 1fr;
+    gap: 24px;
+    margin-bottom: 56px;
+  }
+
+  .perfil.inverso .perfil-foto {
+    order: 0;
+  }
+
+  .perfil-texto h3 {
+    font-size: 38px;
+  }
+}
+
 /* HISTÓRIA */
 .secao-escura {
   max-width: none;
