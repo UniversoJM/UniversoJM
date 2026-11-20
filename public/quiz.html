@@ -52,7 +52,6 @@
         <div id="div_pontos" class="pontos"></div>
         <h1 id="h1_titulo"></h1>
         <p id="p_frase" class="frase"></p>
-        <!-- NOVO 1: mensagem de "Pontuação salva!" -->
         <p id="p_salvo" class="frase"></p>
 
         <div class="botoes">
@@ -105,7 +104,10 @@
 
   <script src="./js/conta.js"></script>
   <script>
-    // cada pergunta tem o texto, um trecho opcional e as 4 opções com seus pontos
+    if (sessionStorage.NOME_USUARIO == null) {
+      window.location = "login.html";
+    }
+
     let perguntas = [
       {
         texto: "Você conhece Jorge & Mateus?",
@@ -209,7 +211,6 @@
       }
     ];
 
-    // faixas de resultado: "max" é a maior pontuação que cai naquela faixa
     let faixas = [
       { max: 6, emoji: "🎧", titulo: "Novato do Sertanejo", frase: "Está começando a conhecer o universo da dupla!" },
       { max: 12, emoji: "🎵", titulo: "Ouvinte de Estrada", frase: "Já conhece alguns sucessos e está entrando no clima!" },
@@ -220,8 +221,8 @@
     let letras = ["A", "B", "C", "D"];
     let atual = 0;
     let pontuacao = 0;
-    let escolhida = -1; // -1 = nenhuma opção escolhida ainda
-    let respostas = []; // NOVO 2: pontos de cada pergunta, na ordem (vai para o dashboard)
+    let escolhida = -1;
+    let respostas = [];
 
     function mostrarPergunta() {
       let pergunta = perguntas[atual];
@@ -265,7 +266,7 @@
         div_msg.innerHTML = "Escolha uma resposta para continuar.";
       } else {
         pontuacao += perguntas[atual].opcoes[escolhida].pontos;
-        respostas.push(perguntas[atual].opcoes[escolhida].pontos); // NOVO 3
+        respostas.push(perguntas[atual].opcoes[escolhida].pontos);
         atual++;
         escolhida = -1;
 
@@ -278,7 +279,6 @@
     }
 
     function mostrarResultado() {
-      // procura a primeira faixa onde a pontuação cabe
       let faixa = faixas[faixas.length - 1];
       for (let i = faixas.length - 1; i >= 0; i--) {
         if (pontuacao <= faixas[i].max) {
@@ -294,10 +294,9 @@
       div_quiz.classList.add("escondido");
       div_resultado.classList.remove("escondido");
 
-      salvarResultado(pontuacao, faixa.titulo, respostas.join(",")); // NOVO 4
+      salvarResultado(pontuacao, faixa.titulo, respostas.join(","));
     }
 
-    // NOVO 4: manda a pontuação para a API, que grava no banco (só se a pessoa estiver logada)
     function salvarResultado(pontos, nivel, listaRespostas) {
       let idUsuario = sessionStorage.ID_USUARIO;
 
@@ -329,9 +328,9 @@
     function refazer() {
       atual = 0;
       pontuacao = 0;
-      respostas = [];        // NOVO 5
+      respostas = [];
       escolhida = -1;
-      p_salvo.innerHTML = ""; // NOVO 5
+      p_salvo.innerHTML = "";
 
       div_resultado.classList.add("escondido");
       div_quiz.classList.remove("escondido");

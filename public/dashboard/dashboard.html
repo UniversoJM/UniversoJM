@@ -119,14 +119,14 @@
 
   <script src="../js/conta.js"></script>
   <script>
-    // só quem está logado vê o dashboard
+    // só quem está logado ve a dashboard
     if (sessionStorage.NOME_USUARIO == null) {
       window.location = "../login.html";
     } else {
       b_usuario.innerHTML = sessionStorage.NOME_USUARIO;
       carregarDados();
 
-      // tempo real: busca os números de novo a cada 5 segundos (não precisa apertar F5)
+      // tempo real: busca os números de novo a cada 5 segundos
       setInterval(function () {
         if (document.hidden == false) {
           carregarDados();
@@ -144,7 +144,7 @@
       { nome: "Lenda J&M", cor: "#e3c97a" }
     ];
 
-    // busca os números na API (que consulta o banco) e desenha na tela
+    // busca os números na API do banco e desenha na tela
     function carregarDados() {
       let idUsuario = sessionStorage.ID_USUARIO;
       if (idUsuario == null) {
