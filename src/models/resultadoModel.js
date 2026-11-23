@@ -10,9 +10,6 @@ function salvar(fkUsuario, pontuacao, nivel, respostas) {
     return database.executar(instrucaoSql, [fkUsuario, pontuacao, nivel, respostas]);
 }
 
-// Nas consultas abaixo, cada pessoa conta uma vez só: vale o ÚLTIMO resultado dela
-// (o subselect pega o maior id de resultado_quiz daquele usuário).
-
 // quantas pessoas terminaram o quiz
 function contarParticipantes() {
     var instrucaoSql = `

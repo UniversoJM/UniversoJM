@@ -50,7 +50,7 @@ function salvar(req, res) {
             .catch(function (erro) {
                 console.log("\nHouve um erro ao salvar o resultado! Erro: ", erro.sqlMessage);
 
-                // o id guardado no navegador não existe mais na tabela usuario (ex: usuários apagados no banco)
+                // usuário não existe mais
                 if (erro.code == "ER_NO_REFERENCED_ROW_2") {
                     res.status(404).json("Usuário não encontrado. Saia e entre de novo.");
                 } else {
@@ -77,8 +77,7 @@ function dados(req, res) {
     ])
         .then(function (respostas) {
 
-            // a lista já vem ordenada: a posição de cada pessoa é a ordem dela na lista
-            // ranking = os 5 primeiros | eu = o usuário logado (null se ele ainda não fez o quiz)
+            // ranking: top 5
             var lista = respostas[3];
             var ranking = [];
             var eu = null;

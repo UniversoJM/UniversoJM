@@ -210,8 +210,6 @@ button:focus-visible {
   margin-bottom: 1.1rem;
 }
 
-/* Campos do cadastro que têm um aviso embaixo: o aviso aparece em cima do espaço
-   que já está reservado aqui, então a caixa não cresce quando ele aparece */
 .campo.com-aviso {
   margin-bottom: 1.9rem;
 }
@@ -284,8 +282,7 @@ button:focus-visible {
   margin-top: 0.6rem;
 }
 
-/* Mensagem geral (erro ou sucesso): só o texto, sem caixa.
-   O espaço de 1 linha fica sempre reservado, para a caixa não crescer quando a mensagem aparece */
+/* Mensagem geral (erro ou sucesso): só o texto, sem caixa. */
 .mensagem {
   margin-top: 1rem;
   min-height: 1.5rem;
@@ -303,8 +300,6 @@ button:focus-visible {
   color: #a9d9a5;
 }
 
-/* Aviso embaixo de cada campo do cadastro: fica solto (position: absolute),
-   então aparecer ou sumir não muda a altura da caixa */
 .aviso {
   position: absolute;
   left: 0;

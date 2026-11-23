@@ -32,7 +32,7 @@
 
       <div class="painel-topo">
         <h1>Quiz Universo Jorge &amp; Mateus</h1>
-        <p class="cartao-sub">Olá, <span id="b_usuario"></span>!
+        <p class="cartao-sub">Olá, <span id="b_usuario"></span>!<span id="s_atualizado"></span></p>
       </div>
 
       <section class="indicadores">
@@ -247,7 +247,7 @@
       let raio = 70;
       let circunferencia = 2 * Math.PI * raio;
 
-      // total de pessoas e quantos níveis têm alguém (para saber se precisa de espaço entre as fatias)
+      // total de pessoas e quantos níveis tem alguém
       let total = 0;
       let niveisComGente = 0;
       for (let i = 0; i < niveis.length; i++) {
@@ -300,7 +300,7 @@
         <div class="rosca-legenda">${legenda}</div>`;
     }
 
-    // o nome vem do cadastro, então é "limpo" antes de entrar no HTML
+    // o nome vem do cadastro, então é limpo antes de entrar no HTML
     function escapar(texto) {
       return String(texto).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
     }
@@ -329,7 +329,6 @@
       }
 
       if (dados.eu != null && dados.eu.posicao > dados.ranking.length) {
-        // "···" só aparece quando existem posições escondidas entre o 5º e o usuário
         if (dados.eu.posicao > dados.ranking.length + 1) {
           linhas += `<p class="rk-sep">···</p>`;
         }
