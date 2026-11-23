@@ -18,7 +18,7 @@ O projeto nasceu de uma história pessoal: ouvir a dupla com o pai e ir a shows 
   - quantos fãs já participaram;
   - a sua pontuação e a **sua posição** no ranking;
   - um gráfico com a distribuição dos fãs por nível;
-  - o **ranking dos fãs**, com o último resultado de cada pessoa.
+  - o **ranking dos fãs**, com a melhor pontuação de cada pessoa.
 
 ## 🛠️ Tecnologias
 
