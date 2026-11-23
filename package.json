@@ -1,13 +1,13 @@
 {
-  "name": "web-data-viz",
+  "name": "universo-jm",
   "version": "1.0.0",
-  "description": "",
+  "description": "Site de fã da dupla Jorge & Mateus, com quiz, ranking e dashboard",
   "main": "app.js",
   "scripts": {
     "start": "node app.js",
     "dev": "nodemon --exec node app.js"
   },
-  "author": "Feito pelos desenvolvedores @ São Paulo Tech School / Bandtec Digital School",
+  "author": "João Pedro Sakamoto Murata Hashimoto",
   "license": "MIT",
   "dependencies": {
     "cors": "^2.8.5",
