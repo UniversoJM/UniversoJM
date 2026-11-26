@@ -6,8 +6,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Dashboard | Universo J&M</title>
 
-  <link rel="stylesheet" href="../css/dashboards.css">
+  <link rel="stylesheet" href="../css/dashboard.css">
   <link rel="stylesheet" href="../css/rodape.css">
+
+  <!-- biblioteca de gráficos Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
 <body>
@@ -65,7 +68,16 @@
         <div class="cartao">
           <h3>Quem são os participantes</h3>
           <p class="cartao-sub">Distribuição por nível</p>
-          <div id="div_rosca" class="rosca"></div>
+          <div class="rosca">
+            <div class="rosca-grafico">
+              <canvas id="graficoRosca"></canvas>
+              <div class="rosca-centro">
+                <span class="rosca-numero" id="rosca_total">0</span>
+                <span class="rosca-rotulo" id="rosca_rotulo">participantes</span>
+              </div>
+            </div>
+            <div class="rosca-legenda" id="div_legenda"></div>
+          </div>
         </div>
 
         <div class="cartao">
@@ -242,62 +254,99 @@
       }
     }
 
-    // gráfico "Quem são os participantes": rosca com uma fatia por nível
-    function desenharRosca(dados) {
-      let raio = 70;
-      let circunferencia = 2 * Math.PI * raio;
+    let graficoRosca = null; // o gráfico é criado uma vez e depois só atualizado
+    let semDados = true;     // true quando ninguém fez o quiz ainda
 
-      // total de pessoas e quantos níveis tem alguém
+    // gráfico "Quem são os participantes": rosca com uma fatia por nível (Chart.js)
+    function desenharRosca(dados) {
+      let nomes = [];
+      let valores = [];
+      let cores = [];
       let total = 0;
-      let niveisComGente = 0;
+      let legenda = "";
+
       for (let i = 0; i < niveis.length; i++) {
         let qtd = qtdDoNivel(dados, niveis[i].nome);
         total += qtd;
-        if (qtd > 0) {
-          niveisComGente++;
-        }
+
+        nomes.push(niveis[i].nome);
+        valores.push(qtd);
+        cores.push(niveis[i].cor);
       }
 
-      let fatias = "";
-      let legenda = "";
-      let acumulado = 0;
-
+      // legenda ao lado do gráfico, com a porcentagem de cada nível
       for (let i = 0; i < niveis.length; i++) {
-        let qtd = qtdDoNivel(dados, niveis[i].nome);
         let pct = 0;
         if (total > 0) {
-          pct = Math.round(qtd / total * 100);
-        }
-
-        if (qtd > 0) {
-          let tamanho = qtd / total * circunferencia;
-          let folga = (niveisComGente > 1) ? 2 : 0;
-          let visivel = tamanho - folga;
-
-          fatias += `
-            <circle class="rosca-fatia" cx="90" cy="90" r="${raio}" fill="none" stroke="${niveis[i].cor}" stroke-width="26"
-              stroke-dasharray="${visivel} ${circunferencia - visivel}" stroke-dashoffset="${-acumulado}" transform="rotate(-90 90 90)">
-              <title>${niveis[i].nome}: ${textoPessoas(qtd)} (${pct}%)</title>
-            </circle>`;
-
-          acumulado += tamanho;
+          pct = Math.round(valores[i] / total * 100);
         }
 
         legenda += `
           <div class="rosca-item">
             <span class="rosca-cor" style="background: ${niveis[i].cor};"></span>
-            <span>${niveis[i].nome}<p class="cartao-nota">${pct}% · ${textoPessoas(qtd)}</p></span>
+            <span>${niveis[i].nome}<p class="cartao-nota">${pct}% · ${textoPessoas(valores[i])}</p></span>
           </div>`;
       }
 
-      div_rosca.innerHTML = `
-        <svg viewBox="0 0 180 180" role="img" aria-label="Distribuição dos participantes por nível">
-          <circle cx="90" cy="90" r="${raio}" fill="none" stroke="#2a2620" stroke-width="26"></circle>
-          ${fatias}
-          <text class="rosca-numero" x="90" y="92" text-anchor="middle">${total}</text>
-          <text class="rosca-rotulo" x="90" y="112" text-anchor="middle">${(total == 1) ? "participante" : "participantes"}</text>
-        </svg>
-        <div class="rosca-legenda">${legenda}</div>`;
+      div_legenda.innerHTML = legenda;
+      rosca_total.innerHTML = total;
+      rosca_rotulo.innerHTML = (total == 1) ? "participante" : "participantes";
+
+      // ninguém fez o quiz ainda: mostra a rosca inteira em cinza
+      semDados = (total == 0);
+      if (semDados) {
+        nomes = ["Sem resultados"];
+        valores = [1];
+        cores = ["#2a2620"];
+      }
+
+      // se a biblioteca não carregou (sem internet), o resto da página continua funcionando
+      if (typeof Chart == "undefined") {
+        console.error("Chart.js não foi carregado.");
+        return;
+      }
+
+      if (graficoRosca == null) {
+        // primeira vez: cria o gráfico
+        graficoRosca = new Chart(document.getElementById("graficoRosca"), {
+          type: "doughnut",
+          data: {
+            labels: nomes,
+            datasets: [{
+              data: valores,
+              backgroundColor: cores,
+              borderColor: "#1c1c1c",
+              borderWidth: 3
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            cutout: "62%",
+            plugins: {
+              legend: { display: false },
+              tooltip: {
+                enabled: true,
+                callbacks: {
+                  label: function (item) {
+                    if (semDados) {
+                      return "Ainda não há resultados";
+                    }
+                    let pct = Math.round(item.raw / total * 100);
+                    return `${item.label}: ${textoPessoas(item.raw)} (${pct}%)`;
+                  }
+                }
+              }
+            }
+          }
+        });
+      } else {
+        // nas próximas vezes: só troca os dados e atualiza (não cria de novo)
+        graficoRosca.data.labels = nomes;
+        graficoRosca.data.datasets[0].data = valores;
+        graficoRosca.data.datasets[0].backgroundColor = cores;
+        graficoRosca.update();
+      }
     }
 
     // o nome vem do cadastro, então é limpo antes de entrar no HTML
