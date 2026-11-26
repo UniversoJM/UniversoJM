@@ -5,8 +5,7 @@ CREATE TABLE usuario (
     id INT PRIMARY KEY AUTO_INCREMENT,
     nome VARCHAR(50) NOT NULL,
     email VARCHAR(50) NOT NULL UNIQUE,
-    senha VARCHAR(45) NOT NULL,
-    dtCadastro DATETIME DEFAULT CURRENT_TIMESTAMP
+    senha VARCHAR(45) NOT NULL
 );
 
 CREATE TABLE resultado_quiz (
@@ -15,7 +14,6 @@ CREATE TABLE resultado_quiz (
     pontuacao INT NOT NULL,
     nivel VARCHAR(30) NOT NULL,
     respostas VARCHAR(40),
-    momento DATETIME DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (fk_usuario) REFERENCES usuario(id)
 );
 
