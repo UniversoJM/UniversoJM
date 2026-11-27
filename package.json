@@ -1,7 +1,7 @@
 {
   "name": "universo-jm",
   "version": "1.0.0",
-  "description": "Site de fã da dupla Jorge & Mateus, com quiz, ranking e dashboard",
+  "description": "Site da dupla Jorge & Mateus, com quiz, ranking e dashboard",
   "main": "app.js",
   "scripts": {
     "start": "node app.js",
