@@ -8,7 +8,7 @@ router.post("/salvar", function (req, res) {
     resultadoController.salvar(req, res);
 });
 
-// o dashboard busca os números e gráficos aqui (o id é do usuário logado, para o KPI "Sua melhor pontuação")
+// o dashboard busca os números e gráficos aqui (o id é do usuário logado, para o KPI "Sua pontuação")
 router.get("/dados/:idUsuario", function (req, res) {
     resultadoController.dados(req, res);
 });
