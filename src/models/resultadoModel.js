@@ -46,7 +46,7 @@ function buscarRanking() {
 }
 
 // a primeira tentativa de um usuário (o KPI "Sua pontuação")
-function buscarMelhorDoUsuario(idUsuario) {
+function buscarPrimeiraDoUsuario(idUsuario) {
     var instrucaoSql = `
         SELECT pontuacao, nivel FROM resultado_quiz
         WHERE fk_usuario = ?
@@ -62,5 +62,5 @@ module.exports = {
     contarParticipantes,
     contarPorNivel,
     buscarRanking,
-    buscarMelhorDoUsuario
+    buscarPrimeiraDoUsuario
 };

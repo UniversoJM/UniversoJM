@@ -235,13 +235,13 @@
         kpi_nivel_pct.innerHTML = `${Math.round(maiorQtd / dados.participantes * 100)}% dos participantes`;
       }
 
-      // melhor pontuação de quem está logado
-      if (dados.melhor == null) {
+      // primeira pontuação de quem está logado
+      if (dados.primeira == null) {
         kpi_minha.innerHTML = "-";
         kpi_minha_nivel.innerHTML = "faça o quiz para aparecer aqui";
       } else {
-        kpi_minha.innerHTML = dados.melhor.pontuacao;
-        kpi_minha_nivel.innerHTML = `de 25 · ${dados.melhor.nivel}`;
+        kpi_minha.innerHTML = dados.primeira.pontuacao;
+        kpi_minha_nivel.innerHTML = `de 25 · ${dados.primeira.nivel}`;
       }
 
       // posição de quem está logado no ranking

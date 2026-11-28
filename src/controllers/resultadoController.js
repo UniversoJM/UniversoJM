@@ -72,7 +72,7 @@ function dados(req, res) {
     Promise.all([
         resultadoModel.contarParticipantes(),
         resultadoModel.contarPorNivel(),
-        resultadoModel.buscarMelhorDoUsuario(idUsuario),
+        resultadoModel.buscarPrimeiraDoUsuario(idUsuario),
         resultadoModel.buscarRanking()
     ])
         .then(function (respostas) {
@@ -99,15 +99,15 @@ function dados(req, res) {
                 }
             }
 
-            var melhor = null;
+            var primeira = null;
             if (respostas[2].length > 0) {
-                melhor = respostas[2][0];
+                primeira = respostas[2][0];
             }
 
             res.json({
                 participantes: respostas[0][0].participantes,
                 niveis: respostas[1],
-                melhor: melhor,
+                primeira: primeira,
                 ranking: ranking,
                 eu: eu
             });
